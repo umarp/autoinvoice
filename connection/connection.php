@@ -20,10 +20,10 @@ $options = [
 // Try to establish a PDO connection
 try {
     // Create a new PDO instance
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $conn = new PDO($dsn, $user, $pass, $options);
 
     // If the connection is successful, print a success message
-    echo "Connected successfully";
+    //echo "Connected successfully";
 } catch (\PDOException $e) {
     // If an exception occurs during the connection attempt, throw a PDOException
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
