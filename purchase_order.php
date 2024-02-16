@@ -49,8 +49,10 @@
                         <th>View</th>
                         <th>ID</th>
                         <th>Refference</th>
-
+                        <th>Total</th>
+                        <th>Issued By</th>
                         <th>Edit</th>
+                        <th>Reprint</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -61,11 +63,16 @@
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($rows as $row):
                         echo "<tr>
-                    <td><a href='view_po.php?id=" . $row['p_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
-                    <td>" . $row['p_id'] . "</td>
-                    <td>" . $row['p_refference'] . "</td>
-                     <td><a href='edit_po.php?id=" . $row['p_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
-                    <td><button class='btn btn-danger' onclick='deletePo(" . $row['p_id'] . ")'>Delete</button></td>
+                    <td><a href='view_po.php?id=" . $row['po_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
+                    <td>" . $row['po_id'] . "</td>
+                    <td>" . $row['po_refference'] . "</td>
+                    <td>" . $row['po_total'] . "</td>
+                    <td>" . $row['po_user'] . "</td>
+
+                     <td><a href='edit_purchase_order.php?id=" . $row['po_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
+                                          <td><a href='print_po.php?id=" . $row['po_id'] . "'><button class='btn btn-primary'>Reprint</button></a></td>
+
+                    <td><button class='btn btn-danger' onclick='deletePo(" . $row['po_id'] . ")'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>

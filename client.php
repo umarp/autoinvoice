@@ -53,7 +53,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM client";
+                    $query = "SELECT * FROM clients";
                     $stmt = $conn->query($query);
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($rows as $row):
@@ -99,11 +99,12 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'POST',
-                        url: 'delete_user.php',
+                        url: 'delete_client.php',
                         data: { clientId: clientId },
                         success: function (response) {
                             // Reload the page or update the table after successful deletion
                             location.reload();
+
                         },
                         error: function (xhr, status, error) {
                             Swal.fire({

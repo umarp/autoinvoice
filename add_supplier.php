@@ -16,15 +16,11 @@
     <div class="container">
         <div class="container-fluid">
 
-            <h4>Add Client</h4>
-            <form method="post" action="do_add_client.php">
+            <h4>Add Supplier</h4>
+            <form method="post" action="do_add_supplier.php">
                 <div class="mb-3">
-                    <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" required>
-                </div>
-                <div class="mb-3">
-                    <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
@@ -38,13 +34,10 @@
                 <div class="mb-3">
                     <label class="form-label" for="address">Address</label>
                     <input type="text" class="form-control" id="address" name="address" required>
-
                 </div>
-
                 <div class="mb-3">
-                    <label class="form-label" for="dob">Date of Birth</label>
-                    <input type="date" class="form-control" id="dob" name="dob" required>
-
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" class="form-control" id="country" name="country" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

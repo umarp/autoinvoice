@@ -3,31 +3,31 @@ include("connection/connection.php");
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $firstName = $_POST["firstName"];
-    $lastName = $_POST["lastName"];
+    $name = $_POST["name"];
     $email = $_POST["email"];
     $phone = $_POST["phone"];
     $address = $_POST["address"];
-    $dob = $_POST["dob"];
+    $country = $_POST["country"];
     $currentDate = date("Y-m-d");
+    echo $name;
+    echo $email;
 
     // Prepare the SQL statement
-    $sql = "INSERT INTO clients (c_firstName, c_lastName, c_email, c_phone, c_address, c_dob, c_dateAdded)
-                VALUES (:firstName, :lastName, :email, :phone, :address, :dob, :date)";
+    $sql = "INSERT INTO supplier (s_name, s_email, s_phone, s_address, s_country, s_dateAdded)
+                VALUES (:name, :email, :phone, :address, :country, :date)";
 
     // Use prepared statements to prevent SQL injection
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':firstName', $firstName);
-    $stmt->bindParam(':lastName', $lastName);
+    $stmt->bindParam(':name', $name);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':phone', $phone);
     $stmt->bindParam(':address', $address);
-    $stmt->bindParam(':dob', $dob);
+    $stmt->bindParam(':country', $country);
     $stmt->bindParam(':date', $currentDate);
 
     // Execute the prepared statement
     $stmt->execute();
-    header('Location: client.php');
+    //header('Location: supplier.php');
     // echo "New record created successfully";
 }
 

@@ -56,14 +56,14 @@
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($rows as $row):
                         echo "<tr>
-                    <td><a href='view_supplier.php?id=" . $row['l_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
+                    <td><a href='view_supplier.php?id=" . $row['s_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
                     <td>" . $row['s_id'] . "</td>
                     <td>" . $row['s_name'] . " </td>
                     <td>" . $row['s_email'] . " </td>
                     <td>" . $row['s_address'] . " </td>
                     <td>" . $row['s_phone'] . " </td>
                     <td>" . $row['s_dateAdded'] . " </td>
-                    <td><a href='edit_supplier.php?id=" . $row['l_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
+                    <td><a href='edit_supplier.php?id=" . $row['s_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
                     <td><button class='btn btn-danger' onclick='deleteSupplier(" . $row['s_id'] . ")'>Delete</button></td>
                 </tr>";
                     endforeach;
@@ -95,7 +95,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'POST',
-                        url: 'delete_user.php',
+                        url: 'delete_supplier.php',
                         data: { supplierId: supplierId },
                         success: function (response) {
                             // Reload the page or update the table after successful deletion

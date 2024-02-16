@@ -33,7 +33,13 @@
           <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
           <span class="nav_name">Dashboard</span>
         </a>
-
+        <a href="supplier.php" class="nav_link ">
+          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+          <span class="nav_name">Suppliers</span>
+        </a> <a href="client.php" class="nav_link ">
+          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+          <span class="nav_name">Client</span>
+        </a>
 
         <a href="purchase_order.php" class="nav_link ">
           <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
