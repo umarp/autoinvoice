@@ -2,14 +2,8 @@
 include("./connection/connection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the maximum reference from the purchase_order table
-    $stmt = $conn->prepare("SELECT MAX(po_refference) AS ref FROM purchase_order");
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maxValue = $result['ref'];
-    $ref = $maxValue + 1;
-
     // Extract data from the form
+    $po_id = $_POST['po_id']; // Assuming you have a hidden input field in your form to retrieve the PO ID
     $supplierId = $_POST['companyName'];
     $currency = $_POST['currency'];
     $generalRemarks = $_POST['generalRemarks'];
@@ -22,11 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = date("d-m-y");
 
     try {
-        // Insert into the purchase_order table
-        $sql = "INSERT INTO purchase_order (po_refference, po_supplierId, po_currency, po_subTotal, po_vatAmount, po_total, po_remarks, po_user, po_date) 
-                VALUES (:ref, :supplierId, :currency, :subTotal, :vatAmount, :total, :generalRemarks, :user, :date)";
+        // Update the purchase_order table
+        $sql = "UPDATE purchase_order SET po_supplierId = :supplierId, po_currency = :currency, po_subTotal = :subTotal, 
+                po_vatAmount = :vatAmount, po_total = :total, po_remarks = :generalRemarks, po_user = :user, po_date = :date 
+                WHERE po_id = :po_id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':ref', $ref);
         $stmt->bindParam(':supplierId', $supplierId);
         $stmt->bindParam(':currency', $currency);
         $stmt->bindParam(':subTotal', $subTotal);
@@ -35,10 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':generalRemarks', $generalRemarks);
         $stmt->bindParam(':user', $user);
         $stmt->bindParam(':date', $date);
+        $stmt->bindParam(':po_id', $po_id);
         $stmt->execute();
 
-        // Get the last inserted ID
-        $po_id = $conn->lastInsertId();
+        // Delete existing product details associated with this purchase order
+        $deleteSql = "DELETE FROM po_products WHERE pop_po_id = :po_id";
+        $deleteStmt = $conn->prepare($deleteSql);
+        $deleteStmt->bindParam(':po_id', $po_id);
+        $deleteStmt->execute();
 
         // Loop through the product details
         foreach ($_POST['description'] as $key => $description) {
@@ -46,26 +44,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $unitPrice = $_POST['unitPrice'][$key];
             $totalPrice = $_POST['totalPrice'][$key];
             $remarks = $_POST['remarks'][$key];
-
+            echo $_POST['totalPrice'][$key];
             // Insert into po_products table
-            $sql = "INSERT INTO po_products (pop_description, pop_quantity, pop_unitPrice, pop_totalPrice, pop_remarks, pop_po_id) 
+            $insertSql = "INSERT INTO po_products (pop_description, pop_quantity, pop_unitPrice, pop_totalPrice, pop_remarks, pop_po_id) 
                     VALUES (:description, :quantity, :unitPrice, :totalPrice, :remarks, :po_id)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':description', $description);
-            $stmt->bindParam(':quantity', $quantity);
-            $stmt->bindParam(':unitPrice', $unitPrice);
-            $stmt->bindParam(':totalPrice', $totalPrice);
-            $stmt->bindParam(':remarks', $remarks);
-            $stmt->bindParam(':po_id', $po_id);
-            $stmt->execute();
+            $insertStmt = $conn->prepare($insertSql);
+            $insertStmt->bindParam(':description', $description);
+            $insertStmt->bindParam(':quantity', $quantity);
+            $insertStmt->bindParam(':unitPrice', $unitPrice);
+            $insertStmt->bindParam(':totalPrice', $totalPrice);
+            $insertStmt->bindParam(':remarks', $remarks);
+            $insertStmt->bindParam(':po_id', $po_id);
+            $insertStmt->execute();
         }
 
-        echo '<form method="GET" id="form" action="print_po.php" target="_blank">
-            <input type="hidden" name="id" value="' . $po_id . '">
-            </form>';
-
-
+        // Redirect after successful update
         header("Location: purchase_order.php");
+        echo "good";
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -73,7 +68,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Invalid request";
 }
 ?>
-
-<script>
-    document.getElementById('form');
-</script>

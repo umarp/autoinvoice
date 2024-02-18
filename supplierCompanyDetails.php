@@ -19,13 +19,13 @@ try {
         echo '
         
                                     <label for="Company" class="form-label">Company</label>
-                            <input type="test" class="form-control" id="Company" readonly value="' . $row["s_name"] . '">
+                            <input type="text" class="form-control" id="Company" readonly value="' . $row["s_name"] . '">
 
-                            <label for="Address" class="form-label">Address</label>
-                            <input type="test" class="form-control" id="Address" readonly value="' . $row["s_email"] . '">
+                            <label for="Address" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="email" readonly value="' . $row["s_email"] . '">
 
                             <label for="Phone" class="form-label">Phone</label>
-                            <input type="number" class="form-control" id="Phone" readonly value="' . $row["s_address"] . '">
+                            <input type="number" class="form-control" id="Phone" readonly value="' . $row["s_phone"] . '">
 
                             <label for="Attention" class="form-label">Attention</label>
                             <input type="text" class="form-control" id="Attention" name="attention">
@@ -38,4 +38,3 @@ try {
     // Handle errors
     echo "Error: " . $e->getMessage();
 }
-?>

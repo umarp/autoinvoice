@@ -1,5 +1,39 @@
 <!doctype html>
 <html lang="en">
+<?php
+include("connection/connection.php");
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $phone = $_POST["phone"];
+    $address = $_POST["address"];
+    $country = $_POST["country"];
+    $currentDate = date("Y-m-d");
+    echo $name;
+    echo $email;
+
+    // Prepare the SQL statement
+    $sql = "INSERT INTO supplier (s_name, s_email, s_phone, s_address, s_country, s_dateAdded)
+                VALUES (:name, :email, :phone, :address, :country, :date)";
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':phone', $phone);
+    $stmt->bindParam(':address', $address);
+    $stmt->bindParam(':country', $country);
+    $stmt->bindParam(':date', $currentDate);
+
+    // Execute the prepared statement
+    $stmt->execute();
+    header('Location: supplier.php');
+    // echo "New record created successfully";
+}
+
+?>
 
 <head>
     <?php require_once("main/head.php") ?>
@@ -17,7 +51,7 @@
         <div class="container-fluid">
 
             <h4>Add Supplier</h4>
-            <form method="post" action="do_add_supplier.php">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name" required>

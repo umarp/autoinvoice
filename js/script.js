@@ -67,11 +67,11 @@ $(document).on("blur", "[id^=unitPrice_]", function () {
     calculateTotal();
 });
 
-$(document).on("blur", "#excludeVat", function () {
+$(document).on("change", "#excludeVat", function () {
     console.log("excludeVat");
     calculateTotal();
 });
-$(document).on("blur", "#includeVat", function () {
+$(document).on("change", "#includeVat", function () {
     console.log("includeVat");
     calculateTotal();
 });

@@ -2,9 +2,9 @@
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
-    --first-color: rgb(197, 197, 197);
-    --first-color-light: #afa5d9;
-    --white-color: #f7f6fb;
+    --first-color: rgb(0, 0, 0);
+    --first-color-light: #03000e;
+    --white-color: #0099ff;
     --body-font: "Nunito", sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100;

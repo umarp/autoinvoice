@@ -1,39 +1,5 @@
 <!doctype html>
 <html lang="en">
-<?php
-include("connection/connection.php");
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
-    $supplierId = $_POST["supplierId"];
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-    $phone = $_POST["phone"];
-    $address = $_POST["address"];
-    $dob = $_POST["country"];
-
-    // Update supplier data in the database
-    $stmt = $conn->prepare("UPDATE supplier SET 
-            s_name = :name,
-            s_email = :email,
-            s_phone = :phone,
-            s_address = :address,
-            s_country = :country
-            WHERE s_id = :id");
-
-    $stmt->bindParam(':id', $supplierId);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':phone', $phone);
-    $stmt->bindParam(':address', $address);
-    $stmt->bindParam(':country', $country);
-
-    $stmt->execute();
-
-    echo "Supplier updated successfully";
-    header("Location: supplier.php");
-}
-?>
 
 <head>
     <?php require_once("main/head.php") ?>
@@ -46,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once("main/header.php");
     ?>
     <div class="container mt-5">
-        <h2>Edit Supplier</h2>
+        <h2>View Supplier</h2>
 
         <?php
 
@@ -65,36 +31,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if ($supplier) {
                     ?>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <form>
                         <input type="hidden" name="supplierId" value="<?php echo $supplier['s_id']; ?>">
                         <div class="row">
                             <div class="col-6 mb-3">
                                 <label for="name" class="form-label">First Name</label>
                                 <input type="text" class="form-control" id="name" name="name"
-                                    value="<?php echo $supplier['s_name']; ?>" required>
+                                    value="<?php echo $supplier['s_name']; ?>" readonly>
                             </div>
 
                             <div class="col-6 mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    value="<?php echo $supplier['s_email']; ?>" required>
+                                    value="<?php echo $supplier['s_email']; ?>" readonly>
                             </div>
 
                             <div class="col-6 mb-3">
                                 <label for="phone" class="form-label">Phone</label>
                                 <input type="number" class="form-control" id="phone" name="phone"
-                                    value="<?php echo $supplier['s_phone']; ?>" required>
+                                    value="<?php echo $supplier['s_phone']; ?>" readonly>
                             </div>
                             <div class="col-6 mb-3">
                                 <label for="phone" class="form-label">Address</label>
                                 <input type="text" class="form-control" id="address" name="address"
-                                    value="<?php echo $supplier['s_address']; ?>" required>
+                                    value="<?php echo $supplier['s_address']; ?>" readonly>
                             </div>
 
                             <div class="col-6 mb-3">
                                 <label for="country" class="form-label">Country</label>
                                 <input type="text" class="form-control" id="country" name="country"
-                                    value="<?php echo $supplier['s_country']; ?>" required>
+                                    value="<?php echo $supplier['s_country']; ?>" readonly>
                             </div>
                             <div class="col-6 mb-3">
                                 <label for="dateAdded" class="form-label">Date Added</label>
@@ -103,7 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Update Supplier</button>
                     </form>
                     <?php
                 } else {

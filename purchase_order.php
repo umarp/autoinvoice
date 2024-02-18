@@ -70,7 +70,7 @@
                     <td>" . $row['po_user'] . "</td>
 
                      <td><a href='edit_purchase_order.php?id=" . $row['po_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
-                                          <td><a href='print_po.php?id=" . $row['po_id'] . "'><button class='btn btn-primary'>Reprint</button></a></td>
+                                          <td><a href='print_po.php?id=" . $row['po_id'] . "' target='_blank'><button class='btn btn-primary'>Reprint</button></a></td>
 
                     <td><button class='btn btn-danger' onclick='deletePo(" . $row['po_id'] . ")'>Delete</button></td>
                 </tr>";

@@ -86,8 +86,8 @@ if (isset($_GET['id'])) {
 
     <div class="container">
         <div class="container-fluid">
-            <h4>Edit Purchase Order</h4>
-            <form class="form" action="do_edit_po.php" method="POST">
+            <h4>View Purchase Order</h4>
+            <form class="form">
                 <!-- Display purchase order details -->
                 <input type="hidden" name="po_id" value="<?php echo $po['po_id']; ?>">
                 <div class="row">
@@ -106,25 +106,14 @@ if (isset($_GET['id'])) {
                             <input type="number" class="form-control" id="Phone" readonly value="<?php echo $phone; ?>">
 
                             <label for="Attention" class="form-label">Attention</label>
-                            <input type="text" class="form-control" id="Attention" name="attention">
+                            <input type="text" class="form-control" id="Attention" name="attention" readonly>
                         </div>
 
                     </div>
                     <div class="col-6">
                         <div class="form-box form-group search-box">
                             <h2>Supplier Details</h2>
-                            <div class="row">
-                                <div class="col">
-                                    <label for="companyName">Select Supplier name</label>
-                                    <input type="text" class="form-control" placeholder="Type to search...">
-                                </div>
-                                <div class="col">
-                                    <label>&nbsp;</label>
-                                    <select name="companyName" class="result form-control" id="selectBox">
-                                        <option>Click to select</option>
-                                    </select>
-                                </div>
-                            </div>
+
                             <div id="supplierInfo">
 
                                 <label for="Company" class="form-label">Company</label>
@@ -140,7 +129,7 @@ if (isset($_GET['id'])) {
                                     value="<?php echo $sup["s_phone"]; ?>">
 
                                 <label for="Attention" class="form-label">Attention</label>
-                                <input type="text" class="form-control" id="Attention" name="attention">
+                                <input type="text" class="form-control" id="Attention" name="attention" readonly>
                             </div>
                         </div>
                     </div>
@@ -148,7 +137,7 @@ if (isset($_GET['id'])) {
                 <!-- Display product details -->
                 <div class="row mt-4 form-box">
                     <div class="col-12">
-                        <select name="currency" id="currency" class="btn btn-primary">
+                        <select name="currency" id="currency" class="btn btn-primary" readonly>
                             <option value="1">Mauritian Rupee (MUR)</option>
                             <option value="2">US Dollar (USD)</option>
                             <option value="3">Euro (EUR)</option>
@@ -167,7 +156,6 @@ if (isset($_GET['id'])) {
                         <table class="table table-bordered table-hover mt-4" id="poItems">
                             <thead>
                                 <tr>
-                                    <th><input id="checkAll" class="formcontrol" type="checkbox"></th>
                                     <th>Desctiption</th>
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
@@ -181,16 +169,17 @@ if (isset($_GET['id'])) {
                                 foreach ($prod as $pop) {
                                     $count++;
                                     echo '<tr>
-                                    <td><input type="checkbox" class="itemRow"></td>
-                                    <td><input type="text" name="description[]" id="description_' . $count . '" class="form-control"
+                                    
+                                    <td><input readonly type="text" name="description[]" id="description_' . $count . '" class="form-control"
                                             required value=' . $pop['pop_description'] . '></td>
-                                    <td><input type="number" name="quantity[]" id="quantity_' . $count . '"
+                                    <td><input readonly type="number" name="quantity[]" id="quantity_' . $count . '"
                                             class="form-control quantity" required value=' . $pop['pop_unitPrice'] . '></td>
-                                    <td><input type="number" name="unitPrice[]" id="unitPrice_' . $count . '" step=".01"
+                                    <td><input readonly type="number" name="unitPrice[]" id="unitPrice_' . $count . '" step=".01"
                                             class="form-control unitPrice" required value=' . $pop['pop_quantity'] . '></td>
-                                    <td><input type="number" name="totalPrice[]" id="totalPrice_' . $count . '" step=".01"
+                                    <td><input readonly type="number" name="totalPrice[]" id="totalPrice_' . $count . '" step=".01"
                                             class="form-control totalPrice" required value=' . $pop['pop_totalPrice'] . '></td>
-                                    <td><input type="text" name="remarks[]" id="remarks_' . $count . '" class="form-control" value=' . $pop['pop_remarks'] . '></td>
+                                    <td><input type="text" readonly name="remarks[]" id="remarks_' . $count . '" 
+                                            class="form-control" value=' . $pop['pop_remarks'] . '></td>
                                 </tr>';
                                 }
                                 ?>
@@ -235,46 +224,24 @@ if (isset($_GET['id'])) {
                             border-color: #4cae4c;
                         }
                     </style>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-danger" id="removeRows">- Remove</a>
-                                <a class="btn btn-success" id="addRows">+ Add More</a>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-flex justify-content-center">
-                            <a class="btn btn-secondary" onclick="calculate()">ReCalculate</a>
-                        </div>
-                        <div class="col-md-4 d-flex justify-content-end">
-                            <label for="ExcludeVat">Vat options</label>
-                            <span class="checkbox-button">
-                                <input type="checkbox" name="excludeVat" id="excludeVat">
-                                <label for="excludeVat">Exclude</label>
-                            </span>
-                            <span class="checkbox-button ms-2">
-                                <input class="btn btn-success" type="checkbox" name="includeVat" id="includeVat"
-                                    value="includeVat">
-                                <label for="includeVat">Include</label>
-                            </span>
-                        </div>
-                    </div>
+
 
                     <div class="row">
 
                         <div class="col-md-3 form-group">
                             <label for="subTotal" class="mr-2">Sub total:</label>
                             <input type="number" class="form-control" name="subTotal" id="subTotal"
-                                placeholder="Sub Total" step=".01" required value="<?php echo $po_subTotal; ?>">
+                                placeholder="Sub Total" step=".01" readonly value="<?php echo $po_subTotal; ?>">
                         </div>
                         <div class="col-md-3 form-group">
                             <label for="vatAmount" class="mr-2">Vat Amount:</label>
                             <input type="number" class="form-control" name="vatAmount" id="vatAmount"
-                                placeholder="Vat Amount" step=".01" required value="<?php echo $po_vatAmount; ?>">
+                                placeholder="Vat Amount" step=".01" readonly value="<?php echo $po_vatAmount; ?>">
                         </div>
                         <div class="col-md-3 form-group">
                             <label for="total" class="mr-2">Total:</label>
                             <input type="number" class="form-control" name="total" id="total" placeholder="Total"
-                                step=".01" required value="<?php echo $po_total; ?>">
+                                step=".01" readonly value="<?php echo $po_total; ?>">
                         </div>
                     </div>
 
@@ -284,12 +251,11 @@ if (isset($_GET['id'])) {
                 <div class="row mt-4 form-box">
                     <div class="col-12">
                         <label>General Remarks</label>
-                        <textarea name="generalRemarks" class="form-control" rows="3">
+                        <textarea name="generalRemarks" class="form-control" rows="3" readonly>
                             <?php echo $po['po_remarks']; ?>
                         </textarea>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
     </div>
@@ -297,39 +263,6 @@ if (isset($_GET['id'])) {
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 </body>
-<script>
 
-    $(document).ready(function () {
-        $('.search-box input[type="text"]').on("keyup input", function () {
-            var inputVal = $(this).val();
-            var resultDropdown = $('#selectBox'); // Selecting the selectBox element
-            if (inputVal.length) {
-                $.get("searchSupplierClients.php", {
-                    term: inputVal,
-                }).done(function (data) {
-                    resultDropdown.html(data); // Update the selectBox with the search results
-                });
-            } else {
-                resultDropdown.empty();
-            }
-        });
-
-        $(document).on("click", "#selectBox", function () {
-
-            var selectedValue = $(this).val();
-            if (selectedValue !== 'Click to select') {
-                $.get("supplierCompanyDetails.php", {
-                    id: selectedValue,
-                }).done(function (data) {
-                    $('#supplierInfo').html(data); // Set the HTML of #supplierInfo
-                });
-            } else {
-                $('#supplierInfo').empty();
-            }
-        });
-    });
-
-
-</script>
 
 </html>

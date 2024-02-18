@@ -1,5 +1,39 @@
 <!doctype html>
 <html lang="en">
+<?php
+include("connection/connection.php");
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $firstName = $_POST["firstName"];
+    $lastName = $_POST["lastName"];
+    $email = $_POST["email"];
+    $phone = $_POST["phone"];
+    $address = $_POST["address"];
+    $dob = $_POST["dob"];
+    $currentDate = date("Y-m-d");
+
+    // Prepare the SQL statement
+    $sql = "INSERT INTO clients (c_firstName, c_lastName, c_email, c_phone, c_address, c_dob, c_dateAdded)
+                VALUES (:firstName, :lastName, :email, :phone, :address, :dob, :date)";
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':firstName', $firstName);
+    $stmt->bindParam(':lastName', $lastName);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':phone', $phone);
+    $stmt->bindParam(':address', $address);
+    $stmt->bindParam(':dob', $dob);
+    $stmt->bindParam(':date', $currentDate);
+
+    // Execute the prepared statement
+    $stmt->execute();
+    header('Location: client.php');
+    // echo "New record created successfully";
+}
+
+?>
 
 <head>
     <?php require_once("main/head.php") ?>
@@ -17,7 +51,7 @@
         <div class="container-fluid">
 
             <h4>Add Client</h4>
-            <form method="post" action="do_add_client.php">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First Name</label>
                     <input type="text" class="form-control" id="firstName" name="firstName" required>

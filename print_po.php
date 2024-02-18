@@ -16,12 +16,13 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if ($rows) {
     $po_id = $rows[0]['po_id'];
     $po_reference = $rows[0]['po_refference'];
-    $currency = $rows[0]['currency'];
+    $currency = $rows[0]['po_currency'];
     $po_supplierId = $rows[0]['po_supplierId'];
     $po_subTotal = $rows[0]['po_subTotal'];
     $po_vatAmount = $rows[0]['po_vatAmount'];
     $po_total = $rows[0]['po_total'];
     $po_remarks = $rows[0]['po_remarks'];
+    $po_date = $rows[0]['po_date'];
 }
 
 $query2 = "SELECT * FROM supplier WHERE s_id = " . $po_supplierId;
@@ -41,11 +42,11 @@ $rows3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 $table = '';
 foreach ($rows3 as $product) {
     $table .= "<tr>
-                    <td style='border: solid 1px black; width: 40%;'>" . $product['pop_description'] . "</td>
-                    <td style='border: solid 1px black; width: 10%;'>" . $product['pop_quantity'] . "</td>
-                    <td style='border: solid 1px black; width: 18%;'>" . $product['pop_unitPrice'] . "</td>
-                    <td style='border: solid 1px black; width: 18%;'>" . $product['pop_totalPrice'] . "</td>
-                    <td style='border: solid 1px black; width: 14%;'>" . $product['pop_remarks'] . "</td>
+                    <td style='border: solid 1px black; width: 40%; padding: 8px;'>" . $product['pop_description'] . "</td>
+                    <td style='border: solid 1px black; width: 10%; padding: 8px;'>" . $product['pop_quantity'] . "</td>
+                    <td style='border: solid 1px black; width: 18%; padding: 8px;'>" . $product['pop_unitPrice'] . "</td>
+                    <td style='border: solid 1px black; width: 18%; padding: 8px;'>" . $product['pop_totalPrice'] . "</td>
+                    <td style='border: solid 1px black; width: 14%; padding: 8px;'>" . $product['pop_remarks'] . "</td>
                </tr>";
 }
 
@@ -97,11 +98,11 @@ $html = "<body>
             <table style='width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden;'>
                 <thead>
                     <tr>
-                        <th style='border: solid 1px black; width: 40%;'>Description</th>
-                        <th style='border: solid 1px black; width: 10%;'>Quantity</th>
-                        <th style='border: solid 1px black; width: 18%;'>Unit Price</th>
-                        <th style='border: solid 1px black; width: 18%;'>Total Price</th>
-                        <th style='border: solid 1px black; width: 14%;'>Remarks</th>
+                        <th style='border: solid 1px black; width: 40%; padding: 8px;'>Description</th>
+                        <th style='border: solid 1px black; width: 10%; padding: 8px;'>Quantity</th>
+                        <th style='border: solid 1px black; width: 18%; padding: 8px;'>Unit Price</th>
+                        <th style='border: solid 1px black; width: 18%; padding: 8px;'>Total Price</th>
+                        <th style='border: solid 1px black; width: 14%; padding: 8px;'>Remarks</th>
                     </tr>
                 </thead>
                 <tbody>

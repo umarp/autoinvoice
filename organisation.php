@@ -15,33 +15,6 @@
     <div class="container">
         <div class="container-fluid">
 
-            <!-- Modal for Data Editing -->
-            <div class="modal fade" id="dataEditingModal" tabindex="-1" role="dialog"
-                aria-labelledby="dataEditingModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="dataEditingModalLabel">Edit Data</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Form for data editing -->
-                            <form id="dataEditForm">
-                                <div class="mb-3">
-                                    <label for="editedData" class="form-label">New Value:</label>
-                                    <input type="text" class="form-control" id="editedData" name="editedData">
-                                </div>
-                                <button type="button" class="btn btn-primary"
-                                    onclick="updateData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Save
-                                    Changes</button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
             <h4 class="mt-2">Organisation Settings</h4>
@@ -105,6 +78,66 @@
                                             onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
 
                             <?php echo "</td></tr>";
+                        } else if ($row["o_name"] == "Company Name") {
+
+                            echo "<tr>
+                                <td>" . $row['o_id'] . "</td>
+                                <td>" . $row['o_name'] . "</td>
+                                <td>" . $row['o_description'] . "</td>
+                                <td>" . $row['o_value'] . "</td>
+
+                                <td>"; ?><button class='btn btn-primary'
+                                                onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
+
+                            <?php echo "</td></tr>";
+                        } else if ($row["o_name"] == "VAT") {
+
+                            echo "<tr>
+                                <td>" . $row['o_id'] . "</td>
+                                <td>" . $row['o_name'] . "</td>
+                                <td>" . $row['o_description'] . "</td>
+                                <td>" . $row['o_value'] . "</td>
+
+                                <td>"; ?><button class='btn btn-primary'
+                                                    onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
+
+                            <?php echo "</td></tr>";
+                        } else if ($row["o_name"] == "BRN") {
+
+                            echo "<tr>
+                                <td>" . $row['o_id'] . "</td>
+                                <td>" . $row['o_name'] . "</td>
+                                <td>" . $row['o_description'] . "</td>
+                                <td>" . $row['o_value'] . "</td>
+
+                                <td>"; ?><button class='btn btn-primary'
+                                                        onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
+
+                            <?php echo "</td></tr>";
+                        } else if ($row["o_name"] == "Address") {
+
+                            echo "<tr>
+                                <td>" . $row['o_id'] . "</td>
+                                <td>" . $row['o_name'] . "</td>
+                                <td>" . $row['o_description'] . "</td>
+                                <td>" . $row['o_value'] . "</td>
+
+                                <td>"; ?><button class='btn btn-primary'
+                                                            onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
+
+                            <?php echo "</td></tr>";
+                        } else if ($row["o_name"] == "Phone") {
+
+                            echo "<tr>
+                                <td>" . $row['o_id'] . "</td>
+                                <td>" . $row['o_name'] . "</td>
+                                <td>" . $row['o_description'] . "</td>
+                                <td>" . $row['o_value'] . "</td>
+
+                                <td>"; ?><button class='btn btn-primary'
+                                                                onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
+
+                            <?php echo "</td></tr>";
                         }
                     endforeach;
                     ?>
@@ -116,6 +149,33 @@
 
 
 
+            <!-- Modal for Data Editing -->
+            <div class="modal fade" id="dataEditingModal" tabindex="-1" role="dialog"
+                aria-labelledby="dataEditingModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dataEditingModalLabel">Edit Data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form for data editing -->
+                            <form id="dataEditForm">
+                                <div class="mb-3">
+                                    <label for="editedData" class="form-label">New Value:</label>
+                                    <input type="text" class="form-control" id="editedData" name="editedData">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                    onclick="updateData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Save
+                                    Changes</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
         </div>
