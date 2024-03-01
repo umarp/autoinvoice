@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($user && password_verify($password, $user['l_password'])) {
 
         session_start();
-        $_SESSION['email'] = $l_email;
+        $_SESSION['userLogin'] = $l_email;
         header('Location: index.php');
 
         exit;
@@ -56,6 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border: 3px solid #ccc;
             border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-image: url("image/background/bg.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
         }
     </style>
 </head>

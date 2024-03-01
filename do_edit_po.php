@@ -10,9 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subTotal = $_POST['subTotal'];
     $vatAmount = $_POST['vatAmount'];
     $total = $_POST['total'];
+    $supplierAttn = $_POST['supplierAttn'];
+    $companyAttn = $_POST['companyAttn'];
+
 
     // Assuming 'currency' is the user value
-    $user = 'currency';
+    $user = 'Umar';
     $date = date("d-m-y");
 
     try {
@@ -30,6 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':user', $user);
         $stmt->bindParam(':date', $date);
         $stmt->bindParam(':po_id', $po_id);
+        $stmt->bindParam(':supplierAttn', $supplierAttn);
+        $stmt->bindParam(':companyAttn', $companyAttn);
         $stmt->execute();
 
         // Delete existing product details associated with this purchase order
@@ -55,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $insertStmt->bindParam(':totalPrice', $totalPrice);
             $insertStmt->bindParam(':remarks', $remarks);
             $insertStmt->bindParam(':po_id', $po_id);
+
             $insertStmt->execute();
         }
 

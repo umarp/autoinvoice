@@ -16,7 +16,7 @@
         <div class="container-fluid">
             <h4 class="mt-2">View Invoice</h4>
             <hr>
-            <div class="row mt-4 mb-4">
+            <div class="row mt-2 mb-2">
                 <div class="col-3">
                     <div class="box">number of users: 10</div>
                 </div>
@@ -32,16 +32,14 @@
                     </a>
                 </div>
             </div>
-            <div class="row mt-4 mb-4">
+            <hr>
+            <div class="row mt-2 mb-4">
                 <div class="col-12">
-                    <a href="add_invoice.php">
+                    <a href="new_invoice.php">
                         <button class="btn btn-primary">Create New Invoice</button>
                     </a>
                 </div>
-
             </div>
-
-            <hr>
 
             <table class="table table-hover cell-border" id="inTable">
                 <thead>
@@ -64,7 +62,7 @@
                     <td><a href='view_in.php?id=" . $row['i_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
                     <td>" . $row['i_id'] . "</td>
                     <td>" . $row['i_refference'] . "</td>
-                     <td><a href='edit_in.php?id=" . $row['i_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
+                     <td><a href='edit_invoice.php?id=" . $row['i_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
                     <td><button class='btn btn-danger' onclick='deleteIn(" . $row['i_id'] . ")'>Delete</button></td>
                 </tr>";
                     endforeach;

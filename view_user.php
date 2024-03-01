@@ -12,7 +12,7 @@
     require_once("main/header.php");
     ?>
     <div class="container mt-5">
-        <h2>View User</h2>
+        <h2 class="mt-4">View User</h2>
 
         <?php
 
@@ -31,7 +31,7 @@
 
                 if ($user) {
                     ?>
-                    <form>
+                    <form class="form-box">
                         <input type="hidden" name="userId" value="<?php echo $user['l_id']; ?>">
                         <div class="row">
                             <div class="col-6 mb-3">

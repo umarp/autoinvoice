@@ -15,8 +15,6 @@
     <div class="container">
         <div class="container-fluid">
 
-
-
             <h4 class="mt-2">Organisation Settings</h4>
             <hr>
             <table class="table table-hover cell-border" id="inTable">
@@ -34,118 +32,104 @@
                     $query = "SELECT * FROM organisation";
                     $stmt = $conn->query($query);
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($rows as $row):
+                    foreach ($rows as $row): ?>
+                        <?php if ($row["o_name"] == "Logo"): ?>
+                            <tr>
+                                <td>
+                                    <?php echo $row['o_id']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $row['o_name']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $row['o_description']; ?>
+                                </td>
+                                <td><img src='<?php echo $row['o_value']; ?>' width='100px'></td>
+                                <td>
+                                    <button class='btn btn-primary' onclick="selectLogo()">Change
+                                        Logo</button>
+                                </td>
+                            </tr>
+                        <?php else: ?>
+                            <tr>
+                                <td>
+                                    <?php echo $row['o_id']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $row['o_name']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $row['o_description']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $row['o_value']; ?>
+                                </td>
+                                <td>
+                                    <!-- Modify the onclick attribute to trigger the dataEditingModal -->
+                                    <button class='btn btn-primary'
+                                        onclick="openDataEditingModal(<?php echo $row['o_id']; ?>)">Edit</button>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
 
-                        if ($row["o_name"] == "Logo") {
-                            echo "<tr>
-                                <td>" . $row['o_id'] . "</td>
-                                <td>" . $row['o_name'] . "</td>
-                                <td>" . $row['o_description'] . "</td>
-                                <td><img src='" . $row['o_value'] . "' width='100px'></td>
-                              <td>"; ?><button class='btn btn-primary'
-                                onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
-
-                            <?php echo "</td></tr>";
-                        } else if ($row["o_name"] == "Purchase order message") {
-
-                            echo "<tr>
-                                <td>" . $row['o_id'] . "</td>
-                                <td>" . $row['o_name'] . "</td>
-                                <td>" . $row['o_description'] . "</td>
-                                <td>" . $row['o_value'] . "</td>
-
-                                <td><button class='btn btn-primary' onclick=changeText(" . $row['o_id'] . ")>Edit</button></td>
-                                </tr>";
-                        } else if ($row["o_name"] == "Invoice message") {
-
-                            echo "<tr>
-                                <td>" . $row['o_id'] . "</td>
-                                <td>" . $row['o_name'] . "</td>
-                                <td>" . $row['o_description'] . "</td>
-                                <td>" . $row['o_value'] . "</td>
-
-                                <td><button class='btn btn-primary' onclick=changeText(" . $row['o_id'] . ")>Edit</button></td>
-                                </tr>";
-                        } else if ($row["o_name"] == "Delivery note message") {
-
-                            echo "<tr>
-                                <td>" . $row['o_id'] . "</td>
-                                <td>" . $row['o_name'] . "</td>
-                                <td>" . $row['o_description'] . "</td>
-                                <td>" . $row['o_value'] . "</td>
-
-                                <td>"; ?><button class='btn btn-primary'
-                                            onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
-
-                            <?php echo "</td></tr>";
-                        } else if ($row["o_name"] == "Company Name") {
-
-                            echo "<tr>
-                                <td>" . $row['o_id'] . "</td>
-                                <td>" . $row['o_name'] . "</td>
-                                <td>" . $row['o_description'] . "</td>
-                                <td>" . $row['o_value'] . "</td>
-
-                                <td>"; ?><button class='btn btn-primary'
-                                                onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
-
-                            <?php echo "</td></tr>";
-                        } else if ($row["o_name"] == "VAT") {
-
-                            echo "<tr>
-                                <td>" . $row['o_id'] . "</td>
-                                <td>" . $row['o_name'] . "</td>
-                                <td>" . $row['o_description'] . "</td>
-                                <td>" . $row['o_value'] . "</td>
-
-                                <td>"; ?><button class='btn btn-primary'
-                                                    onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
-
-                            <?php echo "</td></tr>";
-                        } else if ($row["o_name"] == "BRN") {
-
-                            echo "<tr>
-                                <td>" . $row['o_id'] . "</td>
-                                <td>" . $row['o_name'] . "</td>
-                                <td>" . $row['o_description'] . "</td>
-                                <td>" . $row['o_value'] . "</td>
-
-                                <td>"; ?><button class='btn btn-primary'
-                                                        onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
-
-                            <?php echo "</td></tr>";
-                        } else if ($row["o_name"] == "Address") {
-
-                            echo "<tr>
-                                <td>" . $row['o_id'] . "</td>
-                                <td>" . $row['o_name'] . "</td>
-                                <td>" . $row['o_description'] . "</td>
-                                <td>" . $row['o_value'] . "</td>
-
-                                <td>"; ?><button class='btn btn-primary'
-                                                            onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
-
-                            <?php echo "</td></tr>";
-                        } else if ($row["o_name"] == "Phone") {
-
-                            echo "<tr>
-                                <td>" . $row['o_id'] . "</td>
-                                <td>" . $row['o_name'] . "</td>
-                                <td>" . $row['o_description'] . "</td>
-                                <td>" . $row['o_value'] . "</td>
-
-                                <td>"; ?><button class='btn btn-primary'
-                                                                onclick="changeData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Edit</button>
-
-                            <?php echo "</td></tr>";
-                        }
-                    endforeach;
-                    ?>
 
                 </tbody>
             </table>
 
+            <script>
+                // Function to open logo selection modal
+                function selectLogo(selectedPath) {
+                    if (selectedPath) {
 
+                        $('#logoSelectionModal').modal('hide');
+                    } else {
+                        $('#logoSelectionModal').modal('show');
+                    }
+                }
+            </script>
+            <!-- Modal for selecting logo -->
+            <div class="modal fade" id="logoSelectionModal" tabindex="-1" role="dialog"
+                aria-labelledby="logoSelectionModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="logoSelectionModalLabel">Select Logo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Display photos from the folder -->
+                            <?php
+                            // Define the path to your photo folder
+                            $photoFolder = 'image/logo';
+                            // Get list of photos
+                            $photos = glob($photoFolder . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+                            ?>
+                            <div class="row">
+                                <?php foreach ($photos as $photo): ?>
+                                    <div class="col-md-3">
+                                        <img src="<?php echo $photo; ?>" class="img-fluid select-logo"
+                                            style="cursor: pointer;" onclick="updateLogo( '<?php echo $photo; ?>');">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function openDataEditingModal(oId) {
+
+                    $('#oid').val(oId);
+
+
+                    // Open the dataEditingModal
+                    $('#dataEditingModal').modal('show');
+                }
+            </script>
 
 
 
@@ -162,11 +146,11 @@
                             <!-- Form for data editing -->
                             <form id="dataEditForm">
                                 <div class="mb-3">
+                                    <input type="hidden" id="oid">
                                     <label for="editedData" class="form-label">New Value:</label>
                                     <input type="text" class="form-control" id="editedData" name="editedData">
                                 </div>
-                                <button type="button" class="btn btn-primary"
-                                    onclick="updateData(<?php echo $row['o_id']; ?>, '<?php echo $row['o_name']; ?>')">Save
+                                <button type="button" class="btn btn-primary" onclick="updateData()">Save
                                     Changes</button>
                             </form>
                         </div>
@@ -183,37 +167,49 @@
     </div>
     <script>
 
-
-        function changeData(oId, dataType) {
-            // Open the data editing modal
-            $('#dataEditingModal').modal('show');
-
-            // Set the modal title based on the data type
-            $('#dataEditingModalLabel').text('Edit ' + dataType);
-
-            // Set the data type as a data attribute
-            $('#dataEditingModal').data('dataType', dataType);
-        }
-
-        function updateData(oId, dataType) {
-            // Get the edited data from the form
-            var editedData = $('#editedData').val();
-
-            // Get the data type from the data attribute
-            var dataType = $('#dataEditingModal').data('dataType');
-
+        function updateLogo(editedData) {
             // Send the updated data to the server via AJAX
             $.ajax({
                 type: 'POST',
-                url: 'update_data.php', // Replace with your server-side script to update the data
+                url: 'update_organisation.php', // Replace with your server-side script to update the data
                 data: {
-                    oId: oId,
-                    dataType: dataType,
+                    oId: 1,
                     editedData: editedData
                 },
                 success: function (response) {
                     // Reload the page or update the table after successful data update
                     location.reload();
+
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error updating data: ' + error
+                    });
+                }
+            });
+        }
+
+
+
+        function updateData() {
+            // Get the edited data from the form
+            var editedData = $('#editedData').val();
+            var oId = $('#oid').val();
+
+            // Send the updated data to the server via AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'update_organisation.php', // Replace with your server-side script to update the data
+                data: {
+                    oId: oId,
+                    editedData: editedData
+                },
+                success: function (response) {
+                    // Reload the page or update the table after successful data update
+                    location.reload();
+
                 },
                 error: function (xhr, status, error) {
                     Swal.fire({

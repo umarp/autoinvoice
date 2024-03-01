@@ -23,7 +23,7 @@
 <div class="l-navbar" id="nav-bar">
   <nav class="nav">
     <div>
-      <a href="#" class="nav_logo">
+      <a href="index.php" class="nav_logo">
         <i class='bx bx-layer nav_logo-icon'>
           <img src="image/logo/logo-icon.png" alt="menu" style="width: 30px;">
         </i>
@@ -46,20 +46,20 @@
           <span class="nav_name">Purchase Orders</span>
         </a>
 
-
         <a href="invoice.php" class="nav_link ">
           <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
           <span class="nav_name">Invoice</span>
         </a>
 
-
-
         <a href="delivery_note.php" class="nav_link ">
           <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
-          <span class="nav_name">delivery Note</span>
+          <span class="nav_name">Delivery Note</span>
         </a>
 
-
+        <a href="customerLogin.php" class="nav_link ">
+          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+          <span class="nav_name">Manage <br>Customer Login</span>
+        </a>
 
         <a href="users.php" class="nav_link ">
           <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
@@ -67,37 +67,9 @@
         </a>
         <a href="organisation.php" class="nav_link ">
           <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
-          <span class="nav_name">Manage Organisation</span>
+          <span class="nav_name">Manage <br>Organisation</span>
         </a>
 
-
-
-
-
-        <!-- <a href="#" class="nav_link" onclick="showNavLink2()">
-          <i>
-            <img src="image/icon/menu.png" alt="menu" style="width: 30px;">
-          </i> <span class="nav_name">Purchase Order</span>
-        </a>
-
-        <div class=" nav_link sub_container">
-          <a href="users.php" class="nav_link sub_nav_link_2">
-            <i>
-              <img src="image/icon/menu.png" alt="menu" style="width: 30px;">
-            </i> <span class="nav_name">Purchase Order 1</span>
-          </a>
-          <br>
-          <a href="add_user.php" class="nav_link sub_nav_link_2">
-            <i>
-              <img src="image/icon/menu.png" alt="menu" style="width: 30px;">
-            </i> <span class="nav_name">Add Users</span>
-          </a>
-        </div>
-        <script>function showNavLink2() {
-            const navLink2Container = document.querySelector('.sub_container');
-            navLink2Container.classList.toggle('show-nav_link_2');
-          }
-        </script> -->
 
       </div>
     </div>
@@ -107,54 +79,55 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function (event) {
+    // Event listener for when the DOM content is fully loaded
     //change active class
-    const navBar = document.getElementById('nav-bar');
-    const navLinks = document.querySelectorAll('.nav_link');
-    const currentUrl = window.location.href;
+    const navBar = document.getElementById('nav-bar'); // Selecting the navigation bar element
+    const navLinks = document.querySelectorAll('.nav_link'); // Selecting all navigation links
+    const currentUrl = window.location.href; // Getting the current URL of the page
 
-    if (navBar && navLinks) {
+    if (navBar && navLinks) { // Checking if both navigation bar and navigation links are found
       navLinks.forEach(link => {
-        const linkUrl = link.getAttribute('href');
-        if (currentUrl.includes(linkUrl)) {
-          link.classList.add('active');
+        const linkUrl = link.getAttribute('href'); // Getting the href attribute of each link
+        if (currentUrl.includes(linkUrl)) { // Checking if the current URL includes the link's URL
+          link.classList.add('active'); // Adding 'active' class to the link if it matches the current URL
         }
       });
     }
 
+    // Selecting elements for toggling navigation bar visibility
+    const nav = document.querySelector('.l-navbar'); // Selecting the navigation bar
+    const toggle = document.getElementById('header-toggle'); // Selecting the toggle button
+    const bodypd = document.getElementById('body-pd'); // Selecting the body element
+    const headerpd = document.getElementById('header'); // Selecting the header element
 
-
-    const nav = document.querySelector('.l-navbar');
-    const toggle = document.getElementById('header-toggle');
-    const bodypd = document.getElementById('body-pd');
-    const headerpd = document.getElementById('header');
-
-    if (navBar && nav && toggle && bodypd && headerpd) {
+    if (navBar && nav && toggle && bodypd && headerpd) { // Checking if all required elements are found
+      // Adding event listeners for mouse enter and mouse leave events to toggle navigation bar visibility
       navBar.addEventListener('mouseenter', () => {
-        nav.classList.add('show1');
-        toggle.classList.add('bx-x');
-        bodypd.classList.add('body-pd');
-        headerpd.classList.add('body-pd');
+        nav.classList.add('show1'); // Adding 'show1' class to expand the navigation bar
+        toggle.classList.add('bx-x'); // Adding 'bx-x' class to change the toggle button icon
+        bodypd.classList.add('body-pd'); // Adding padding to the body
+        headerpd.classList.add('body-pd'); // Adding padding to the header
       });
 
       navBar.addEventListener('mouseleave', () => {
-        nav.classList.remove('show1');
-        toggle.classList.remove('bx-x');
-        bodypd.classList.remove('body-pd');
-        headerpd.classList.remove('body-pd');
+        nav.classList.remove('show1'); // Removing 'show1' class to collapse the navigation bar
+        toggle.classList.remove('bx-x'); // Removing 'bx-x' class to change the toggle button icon back
+        bodypd.classList.remove('body-pd'); // Removing padding from the body
+        headerpd.classList.remove('body-pd'); // Removing padding from the header
       });
     }
 
     /*===== LINK ACTIVE =====*/
-    const linkColor = document.querySelectorAll('.nav_link');
+    const linkColor = document.querySelectorAll('.nav_link'); // Selecting all navigation links again
 
-    function colorLink() {
+    function colorLink() { // Function to handle link click event
       if (linkColor) {
-        linkColor.forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
+        linkColor.forEach(l => l.classList.remove('active')); // Removing 'active' class from all links
+        this.classList.add('active'); // Adding 'active' class to the clicked link
       }
     }
 
-    linkColor.forEach(l => l.addEventListener('click', colorLink));
+    linkColor.forEach(l => l.addEventListener('click', colorLink)); // Adding click event listener to each link
   });
 
 </script>

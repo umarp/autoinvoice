@@ -139,17 +139,7 @@ if (isset($_GET['id'])) {
                     <div class="col-12">
                         <select name="currency" id="currency" class="btn btn-primary" readonly>
                             <option value="1">Mauritian Rupee (MUR)</option>
-                            <option value="2">US Dollar (USD)</option>
-                            <option value="3">Euro (EUR)</option>
-                            <option value="4">British Pound (GBP)</option>
-                            <option value="5">Japanese Yen (JPY)</option>
-                            <option value="6">Australian Dollar (AUD)</option>
-                            <option value="7">Canadian Dollar (CAD)</option>
-                            <option value="8">Swiss Franc (CHF)</option>
-                            <option value="9">Chinese Yuan (CNY)</option>
-                            <option value="10">Indian Rupee (INR)</option>
-                            <option value="11">Russian Ruble (RUB)</option>
-                            <option value="12">South Korean Won (KRW)</option>
+                            <?php echo $po['po_currency']; ?>
                         </select>
 
 

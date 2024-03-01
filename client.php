@@ -34,7 +34,14 @@
             </div>
 
             <hr>
+            <div class="row mt-2 mb-4">
+                <div class="col-12">
+                    <a href="add_client.php">
+                        <button class="btn btn-primary">Create New Client</button>
+                    </a>
+                </div>
 
+            </div>
             <table class="table table-hover cell-border" id="clientTable">
                 <thead>
                     <tr>

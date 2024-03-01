@@ -2,9 +2,9 @@
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
-    --first-color: rgb(0, 0, 0);
-    --first-color-light: #03000e;
-    --white-color: #0099ff;
+    --first-color: rgb(121, 186, 255);
+    --first-color-light: #413426;
+    --white-color: #080808;
     --body-font: "Nunito", sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100;
@@ -21,6 +21,11 @@ body {
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: 0.5s;
+    background-image: url("image/background/6.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 }
 a {
     text-decoration: none;
@@ -35,7 +40,12 @@ a {
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
-    background-color: rgb(33, 162, 254);
+
+    background-image: url("image/background/1.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
     z-index: var(--z-fixed);
     transition: 0.5s;
 }
@@ -61,11 +71,32 @@ a {
     left: -30%;
     width: var(--nav-width);
     height: 100vh;
-    background-color: red;
+    background-color: red; /* Fallback color */
+    background-image: url("image/background/5.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     padding: 0.5rem 1rem 0 0;
     transition: 0.5s;
     z-index: var(--z-fixed);
 }
+
+/* .l-navbar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("image/background/5.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    z-index: -1;
+} */
+
 .nav {
     height: 100%;
     display: flex;
@@ -142,6 +173,15 @@ a {
     font-weight: bold;
     font-size: 1.2rem;
 }
+/* Dashboard Style */
+
+.dashboard-box {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
 
 /* Form Style */
 
@@ -150,8 +190,16 @@ a {
     border-radius: 10px;
     box-shadow: 0px 0px 10px 2px grey;
     padding: 10px;
+    background-color: lightgray;
 }
-
+/*Datable style*/
+.dataTables_wrapper {
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px grey;
+    padding: 10px;
+    background-color: white;
+}
 @media screen and (min-width: 768px) {
     body {
         margin: calc(var(--header-height) + 1rem) 0 0 0;

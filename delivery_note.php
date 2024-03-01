@@ -14,9 +14,10 @@
     <!--Container Main start-->
     <div class="container">
         <div class="container-fluid">
-            <h4 class="mt-2">View Delivery Note</h4>
+            <h4 class="mt-2">Delivery Note</h4>
             <hr>
-            <div class="row mt-4 mb-4">
+
+            <div class="row mt-2 mb-2">
                 <div class="col-3">
                     <div class="box">number of users: 10</div>
                 </div>
@@ -26,13 +27,17 @@
                 <div class="col-3">
                     <div class="box">number of users: 10</div>
                 </div>
+
+
                 <div class="col-3">
                     <a href="add_user.php">
                         <div class="box">Add User</div>
                     </a>
                 </div>
             </div>
-            <div class="row mt-4 mb-4">
+            <hr>
+
+            <div class="row  mb-4">
                 <div class="col-12">
                     <a href="add_delivery_note.php">
                         <button class="btn btn-primary">Create New Delivery Note</button>
@@ -41,7 +46,7 @@
 
             </div>
 
-            <hr>
+
 
             <table class="table table-hover cell-border" id="dnTable">
                 <thead>
@@ -49,7 +54,9 @@
                         <th>View</th>
                         <th>ID</th>
                         <th>Refference</th>
-
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Date Issued</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -60,12 +67,22 @@
                     $stmt = $conn->query($query);
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($rows as $row):
+
+                        if ($row['sn_cs_type'] == "Client") {
+                            $query1 = "SELECT * FROM clients WHERE " . $row['dn_cs_id'] . " = c_id  ";
+                            $stmt1 = $conn->query($query1);
+                            $rows1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+                            $rows1[''];
+                        }
                         echo "<tr>
-                    <td><a href='view_dn.php?id=" . $row['d_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
-                    <td>" . $row['d_id'] . "</td>
-                    <td>" . $row['d_refference'] . "</td>
-                     <td><a href='edit_dn.php?id=" . $row['d_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
-                    <td><button class='btn btn-danger' onclick='deleteDn(" . $row['d_id'] . ")'>Delete</button></td>
+                    <td><a href='view_dn.php?id=" . $row['dn_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
+                    <td>" . $row['dn_id'] . "</td>
+                    <td>" . $row['dn_refference'] . "</td>
+                    <td>" . $row['dn_supplier_client_name'] . "</td>
+                    <td>" . $row['dn_cs_type'] . "</td>
+                    <td>" . $row['dn_date'] . "</td>
+                     <td><a href='edit_dn.php?id=" . $row['dn_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
+                    <td><button class='btn btn-danger' onclick='deleteDn(" . $row['dn_id'] . ")'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>

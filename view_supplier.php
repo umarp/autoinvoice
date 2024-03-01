@@ -31,7 +31,7 @@
 
                 if ($supplier) {
                     ?>
-                    <form>
+                    <form class="form-box">
                         <input type="hidden" name="supplierId" value="<?php echo $supplier['s_id']; ?>">
                         <div class="row">
                             <div class="col-6 mb-3">

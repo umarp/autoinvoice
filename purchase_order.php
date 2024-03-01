@@ -14,9 +14,9 @@
     <!--Container Main start-->
     <div class="container">
         <div class="container-fluid">
-            <h4 class="mt-2">View Purchase Orders</h4>
+            <h4 class="mt-2">Purchase Orders</h4>
             <hr>
-            <div class="row mt-4 mb-4">
+            <div class="row mt-2 mb-2">
                 <div class="col-3">
                     <div class="box">number of users: 10</div>
                 </div>
@@ -32,7 +32,8 @@
                     </a>
                 </div>
             </div>
-            <div class="row mt-4 mb-4">
+            <hr>
+            <div class="row mt-2 mb-4">
                 <div class="col-12">
                     <a href="new_purchase_order.php">
                         <button class="btn btn-primary">Create New Purchase Order</button>
@@ -41,7 +42,7 @@
 
             </div>
 
-            <hr>
+
 
             <table class="table table-hover cell-border" id="poTable">
                 <thead>

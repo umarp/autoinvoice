@@ -78,8 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user) {
           ?>
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> <input type="hidden"
-              name="userId" value="<?php echo $user['l_id']; ?>">
+          <form class="form-box" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> <input
+              type="hidden" name="userId" value="<?php echo $user['l_id']; ?>">
             <div class="row">
               <div class="col-6 mb-3">
                 <label for="firstName" class="form-label">First Name</label>

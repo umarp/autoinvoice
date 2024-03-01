@@ -23,6 +23,9 @@ if ($rows) {
     $po_total = $rows[0]['po_total'];
     $po_remarks = $rows[0]['po_remarks'];
     $po_date = $rows[0]['po_date'];
+    $companyAttn = $rows[0]['po_companyAttn'];
+    $supplierAttn = $rows[0]['po_supplierAttn'];
+
 }
 
 $query2 = "SELECT * FROM supplier WHERE s_id = " . $po_supplierId;
@@ -70,6 +73,12 @@ $row6 = $stmt6->fetch(PDO::FETCH_ASSOC);
 if ($row6) {
     $o_brn = $row6['o_value'];
 }
+$query7 = "SELECT * FROM organisation WHERE o_id=2";
+$stmt7 = $conn->query($query7);
+$row7 = $stmt7->fetch(PDO::FETCH_ASSOC);
+if ($row7) {
+    $o_poMessage = $row7['o_value'];
+}
 
 $html = "<body>
             <table style='width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden;'>
@@ -78,20 +87,26 @@ $html = "<body>
                         <img src='image\logo\logo-no-background.png' style='height: 40px;' />
                     </td>
                 </tr>
+                <hr>
                 <tr>
                     <td style='width: 33%;'>" . $o_name . "</td>
                     <td style='width: 33%;'>Supplier: " . $s_name . "</td>
                     <td style='width: 33%; text-align: right;'>PO Reference: " . $po_reference . "</td>
                 </tr>
                 <tr>
-                    <td>" . $o_brn . "</td>
+                    <td>BRN:" . $o_brn . "</td>
                     <td>Phone: " . $s_phone . "</td>
                     <td style='text-align: right;'>Currency: " . $currency . "</td>
                 </tr>
                 <tr>
-                    <td>" . $o_vat . "</td>
+                    <td>Vat:" . $o_vat . "</td>
                     <td>Address: " . $s_address . "</td>
                     <td style='text-align: right;'>PO Date: " . $po_date . "</td>
+                </tr>
+                  <tr>
+                    <td>From: " . $companyAttn . "</td>
+                    <td></td>
+                    <td style='text-align: right;'>Attention: </td>: " . $supplierAttn . "</td>
                 </tr>
             </table>
             <hr />
@@ -107,6 +122,26 @@ $html = "<body>
                 </thead>
                 <tbody>
                     " . $table . "
+                    <tr>
+                    <td></td>
+                    <td></td>
+                    <td style='border: solid 1px black; width: 40%; padding: 8px;font-weight:bold;'>Sub Total</td>
+                    <td style='border: solid 1px black; width: 40%; padding: 8px;'>" . $po_subTotal . "</td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                    <td></td>
+                    <td></td>
+                    <td style='border: solid 1px black; width: 40%; padding: 8px;font-weight:bold;'>Vat Ammount</td>
+                    <td style='border: solid 1px black; width: 40%; padding: 8px;'>" . $po_vatAmount . "</td>
+                    <td></td>
+                    </tr><tr>
+                    <td></td>
+                    <td></td>
+                    <td style='border: solid 1px black; width: 40%; padding: 8px;font-weight:bold;'>Total</td>
+                    <td style='border: solid 1px black; width: 40%; padding: 8px;'>" . $po_total . "</td>
+                    <td></td>
+                    </tr>
                 </tbody>
             </table>
             <hr />
@@ -118,7 +153,11 @@ $html = "<body>
                         <td style='width: 50%; text-align: right;'>Signature: ______________________</td>
                     </tr>
                 </table>
-            </div>
+               </div>
+          <!-- Thank you message -->
+          <div style='position: absolute; bottom: 20px; width: 100%; text-align: center; left: 0;font-weight:bold;'>
+              <p>" . $o_poMessage . "</p>
+          </div>
         </body>";
 
 $mpdf->WriteHtml($html);

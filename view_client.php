@@ -9,7 +9,7 @@
 <body id="body-pd">
     <?php require_once("main/header.php"); ?>
     <div class="container mt-5">
-        <h2>Edit Client</h2>
+        <h2>View Client</h2>
 
         <?php
 
@@ -27,7 +27,7 @@
 
                 if ($client) {
                     ?>
-                    <form>
+                    <form class="form-box">
                         <input type="hidden" name="clientId" value="<?php echo $client['c_id']; ?>">
                         <div class="row">
                             <div class="col-6 mb-3">
