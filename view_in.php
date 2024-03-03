@@ -10,12 +10,12 @@
 
     <?php
     require_once("main/header.php");
-
+    // Check if the purchase order ID is provided via GET request
     if (isset($_GET['id'])) {
         $i_id = $_GET['id'];
 
         try {
-            // Retrieve the invoice details from the database
+            // Retrieve the purchase order details from the database
             $stmt = $conn->prepare("SELECT * FROM invoice WHERE i_id = :i_id");
             $stmt->bindParam(':i_id', $i_id);
             $stmt->execute();
@@ -61,16 +61,16 @@
 
 
 
-            // Check if the invoice exists
+            // Check if the purchase order exists
             if ($i) {
-                // Retrieve product details associated with the invoice
+                // Retrieve product details associated with the purchase order
                 $stmt2 = $conn->prepare("SELECT * FROM invoice_products WHERE ip_i_id = :i_id");
                 $stmt2->bindParam(':i_id', $i_id);
                 $stmt2->execute();
                 $prod = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             } else {
                 // Redirect to an error page or show an error message
-                echo "Invoice not found.";
+                echo "Purchase order not found.";
                 exit();
             }
         } catch (PDOException $e) {
@@ -78,7 +78,7 @@
         }
     } else {
         // Redirect to an error page or show an error message
-        echo "Invoice ID not provided.";
+        echo "Purchase order ID not provided.";
         exit();
     }
     ?>
@@ -87,7 +87,7 @@
         <div class="container-fluid">
 
             <h4>Invoice</h4>
-            <form class="form" action="do_edit_invoice.php" method="POST">
+            <form class="form">
                 <input type="hidden" name="i_id" value="<?php echo $i['i_id']; ?>">
 
                 <div class="row">
@@ -112,21 +112,7 @@
                     <div class="col-6">
                         <div class="form-box form-group search-box">
                             <h2>Client Details</h2>
-                            <div class="row">
-                                <div class="col">
-                                    <label for="companyName">Select Client name</label>
-                                    <input type="text" class="form-control" placeholder="Type to search...">
-                                </div>
-                                <div class="col">
-                                    <label>&nbsp;</label>
-                                    <select name="clientName" class="result form-control" id="selectBox">
-                                        <option value="<?php echo $client_id; ?>">
-                                            <?php echo $client["c_firstName"] . " " . $client["c_lastName"]; ?>
-                                        </option>
 
-                                    </select>
-                                </div>
-                            </div>
                             <div id="clientInfo">
                                 <label for="Company" class="form-label">Client</label>
                                 <input type="text" class="form-control" id="Company" readonly
@@ -145,26 +131,16 @@
                 </div>
                 <div class="row mt-4 form-box">
                     <div class="col-12">
-                        <select name="currency" id="currency" class="btn btn-primary">
-                            <option value="MUR">Mauritian Rupee (MUR)</option>
-                            <option value="USD">US Dollar (USD)</option>
-                            <option value="EUR">Euro (EUR)</option>
-                            <option value="GBP">British Pound (GBP)</option>
-                            <option value="JPY">Japanese Yen (JPY)</option>
-                            <option value="AUD">Australian Dollar (AUD)</option>
-                            <option value="CAD">Canadian Dollar (CAD)</option>
-                            <option value="CHF">Swiss Franc (CHF)</option>
-                            <option value="CNY">Chinese Yuan (CNY)</option>
-                            <option value="INR">Indian Rupee (INR)</option>
-                            <option value="RUB">Russian Ruble (RUB)</option>
-                            <option value="KRW">South Korean Won (KRW)</option>
-                        </select>
+                        <div class="btn btn-primary" readonly>
+
+                            <?php echo $i_currency; ?>
+
+                        </div>
 
 
                         <table class="table table-bordered table-hover mt-4" id="poItems">
                             <thead>
                                 <tr>
-                                    <th><input id="checkAll" class="formcontrol" type="checkbox"></th>
                                     <th>Desctiption</th>
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
@@ -178,16 +154,16 @@
                                 foreach ($prod as $ip) {
                                     $count++;
                                     echo '<tr>
-                                    <td><input type="checkbox" class="itemRow"></td>
-                                    <td><input type="text" name="description[]" id="description_' . $count . '" class="form-control"
-                                            required value=' . $ip['ip_description'] . '></td>
-                                    <td><input type="number" name="quantity[]" id="quantity_' . $count . '"
-                                            class="form-control quantity" required value=' . $ip['ip_unitPrice'] . '></td>
-                                    <td><input type="number" name="unitPrice[]" id="unitPrice_' . $count . '" step=".01"
-                                            class="form-control unitPrice" required value=' . $ip['ip_quantity'] . '></td>
-                                    <td><input type="number" name="totalPrice[]" id="totalPrice_' . $count . '" step=".01"
-                                            class="form-control totalPrice" required value=' . $ip['ip_totalPrice'] . '></td>
-                                    <td><input type="text" name="remarks[]" id="remarks_' . $count . '" class="form-control" value=' . $ip['ip_remarks'] . '></td>
+                                    
+                                    <td><input readonly type="text" name="description[]" id="description_' . $count . '" class="form-control"
+                                            required value=' . $ip['ip_description'] . ' ></td>
+                                    <td><input readonly type="number" name="quantity[]" id="quantity_' . $count . '"
+                                            class="form-control quantity" required value=' . $ip['ip_unitPrice'] . ' ></td>
+                                    <td><input readonly type="number" name="unitPrice[]" id="unitPrice_' . $count . '" step=".01"
+                                            class="form-control unitPrice" required value=' . $ip['ip_quantity'] . ' ></td>
+                                    <td><input readonly type="number" name="totalPrice[]" id="totalPrice_' . $count . '" step=".01"
+                                            class="form-control totalPrice" required value=' . $ip['ip_totalPrice'] . ' ></td>
+                                    <td><input readonly type="text" name="remarks[]" id="remarks_' . $count . '" class="form-control" value=' . $ip['ip_remarks'] . '   ></td>
                                 </tr>';
                                 }
                                 ?>
@@ -231,46 +207,25 @@
                             border-color: #4cae4c;
                         }
                     </style>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-danger" id="removeRows">- Remove</a>
-                                <a class="btn btn-success" id="addRows">+ Add More</a>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-flex justify-content-center">
-                            <a class="btn btn-secondary" onclick="calculate()">ReCalculate</a>
-                        </div>
-                        <div class="col-md-4 d-flex justify-content-end">
-                            <label for="ExcludeVat">Vat options</label>
-                            <span class="checkbox-button">
-                                <input type="checkbox" name="excludeVat" id="excludeVat">
-                                <label for="excludeVat">Exclude</label>
-                            </span>
-                            <span class="checkbox-button ms-2">
-                                <input class="btn btn-success" type="checkbox" name="includeVat" id="includeVat"
-                                    value="includeVat">
-                                <label for="includeVat">Include</label>
-                            </span>
-                        </div>
-                    </div>
+
 
                     <div class="row">
 
                         <div class="col-md-3 form-group">
                             <label for="subTotal" class="mr-2">Sub total:</label>
                             <input type="number" class="form-control" name="subTotal" id="subTotal"
-                                placeholder="Sub Total" step=".01" required value="<?php echo $i_subTotal; ?>">
+                                placeholder="Sub Total" step=".01" required value="<?php echo $i_subTotal; ?>" readonly>
                         </div>
                         <div class="col-md-3 form-group">
                             <label for="vatAmount" class="mr-2">Vat Amount:</label>
                             <input type="number" class="form-control" name="vatAmount" id="vatAmount"
-                                placeholder="Vat Amount" step=".01" required value="<?php echo $i_vatAmount; ?>">
+                                placeholder="Vat Amount" step=".01" required value="<?php echo $i_vatAmount; ?>"
+                                readonly>
                         </div>
                         <div class="col-md-3 form-group">
                             <label for="total" class="mr-2">Total:</label>
                             <input type="number" class="form-control" name="total" id="total" placeholder="Total"
-                                step=".01" required value="<?php echo $i_total; ?>">
+                                step=".01" required value="<?php echo $i_total; ?>" readonly>
                         </div>
                     </div>
 
@@ -279,7 +234,7 @@
 
                 <div class="row mt-4 form-box">
                     <div class="col-12"><label>General Remarks</label>
-                        <textarea name="generalRemarks" class="form-control" id="generalRemarks" rows="3">
+                        <textarea name="generalRemarks" class="form-control" id="generalRemarks" rows="3" readonly>
                             <?php echo $i_remarks; ?>
                         </textarea>
 
@@ -287,7 +242,6 @@
 
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
 
         </div>
@@ -300,40 +254,7 @@
 </body>
 
 
-<!-- Your JavaScript code -->
-<script>
-    $(document).ready(function () {
-        $('.search-box input[type="text"]').on("keyup input", function () {
-            var inputVal = $(this).val();
-            var resultDropdown = $('#selectBox'); // Selecting the selectBox element
-            if (inputVal.length) {
-                $.get("searchClients.php", {
-                    term: inputVal,
-                }).done(function (data) {
-                    resultDropdown.html(data); // Update the selectBox with the search results
-                });
-            } else {
-                resultDropdown.empty();
-            }
-        });
 
-        $(document).on("click", "#selectBox", function () {
-
-            var selectedValue = $(this).val();
-            if (selectedValue !== 'Click to select') {
-                $.get("clientDetails.php", {
-                    id: selectedValue,
-                }).done(function (data) {
-                    $('#clientInfo').html(data);
-                    // Set the HTML of #supplierInfo
-                });
-            } else {
-                $('#clientInfo').empty();
-            }
-        });
-    });
-
-</script>
 
 
 

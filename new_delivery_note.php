@@ -40,13 +40,13 @@
     <div class="container">
         <div class="container-fluid">
 
-            <h4>Purchase Order</h4>
+            <h4>Invoice</h4>
             <form class="form" action="save_delivery_note.php" method="POST">
 
                 <div class="row">
                     <div class="col-6">
                         <div class="form-box">
-                            <h2>Delivery Note</h2>
+                            <h2>Company Details</h2>
                             <label for="Company" class="form-label">Company</label>
                             <input type="text" class="form-control" id="Company" readonly
                                 value="<?php echo $companyname; ?>">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-box form-group search-box">
-                            <h2>Supplier Details</h2>
+                            <h2>Client Details</h2>
                             <div class="row">
                                 <div class="col">
                                     <label for="companyName">Select Client name</label>
@@ -72,12 +72,12 @@
                                 </div>
                                 <div class="col">
                                     <label>&nbsp;</label>
-                                    <select name="companyName" class="result form-control" id="selectBox">
+                                    <select name="clientName" class="result form-control" id="selectBox">
                                         <option>Click to select</option>
                                     </select>
                                 </div>
                             </div>
-                            <div id="supplierInfo"></div>
+                            <div id="clientInfo"></div>
                         </div>
                     </div>
                 </div>
@@ -86,10 +86,10 @@
 
 
 
-                        <table class="table table-bordered table-hover mt-4" id="poItems">
+                        <table class="table table-bordered table-hover mt-4" id="dnItems">
                             <thead>
                                 <tr>
-                                    <th><input id="checkAll" class="formcontrol" type="checkbox"></th>
+                                    <th><input id="checkAll1" class="formcontrol" type="checkbox"></th>
                                     <th>Desctiption</th>
                                     <th>Quantity</th>
 
@@ -98,11 +98,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="checkbox" class="itemRow"></td>
+                                    <td><input type="checkbox" class="itemRow1"></td>
                                     <td><input type="text" name="description[]" id="description_1" class="form-control"
                                             required></td>
                                     <td><input type="number" name="quantity[]" id="quantity_1"
                                             class="form-control quantity" required></td>
+
                                     <td><input type="text" name="remarks[]" id="remarks_1" class="form-control"></td>
                                 </tr>
 
@@ -145,15 +146,21 @@
                             border-color: #4cae4c;
                         }
                     </style>
+
                     <div class="row mt-2">
                         <div class="col-md-4">
                             <div class="btn-group" role="group">
-                                <a class="btn btn-danger" id="removeRows">- Remove</a>
-                                <a class="btn btn-success" id="addRows">+ Add More</a>
+                                <a class="btn btn-danger" id="removeRows1">- Remove</a>
+                                <a class="btn btn-success" id="addRows1">+ Add More</a>
                             </div>
                         </div>
+
                     </div>
+
+
                 </div>
+
+
                 <div class="row mt-4 form-box">
                     <div class="col-12"><label>General Remarks</label>
                         <textarea name="generalRemarks" class="form-control" id="generalRemarks" rows="3"></textarea>
@@ -182,7 +189,7 @@
             var inputVal = $(this).val();
             var resultDropdown = $('#selectBox'); // Selecting the selectBox element
             if (inputVal.length) {
-                $.get("searchSupplierClients.php", {
+                $.get("searchClients.php", {
                     term: inputVal,
                 }).done(function (data) {
                     resultDropdown.html(data); // Update the selectBox with the search results
@@ -193,20 +200,68 @@
         });
 
         $(document).on("click", "#selectBox", function () {
-            console.log('fu')
+
             var selectedValue = $(this).val();
             if (selectedValue !== 'Click to select') {
-                $.get("supplierCompanyDetails.php", {
+                $.get("clientDetails.php", {
                     id: selectedValue,
                 }).done(function (data) {
-                    $('#supplierInfo').html(data); // Set the HTML of #supplierInfo
+                    $('#clientInfo').html(data);
+                    // Set the HTML of #supplierInfo
                 });
             } else {
-                $('#supplierInfo').empty();
+                $('#clientInfo').empty();
             }
         });
     });
+    //deliver Note JS
 
+    //check All
+    $(document).on("click", "#checkAll1", function () {
+        $(".itemRow1").prop("checked", this.checked);
+    });
+
+    $(document).on("click", ".itemRow1", function () {
+        if ($(".itemRow1:checked").length == $(".itemRow1").length) {
+            $("#checkAll1").prop("checked", true);
+        } else {
+            $("#checkAll1").prop("checked", false);
+        }
+    });
+
+    // add row
+    var count1 = $(".itemRow1").length;
+    $(document).on("click", "#addRows1", function () {
+        count1++;
+        console.log(count1);
+        var newRow1 = "";
+        newRow1 += "<tr>";
+        newRow1 += '<td><input class="itemRow1" type="checkbox"></td>';
+        newRow1 +=
+            '<td><input class="form-control" type="text" id="description_' +
+            count1 +
+            '" name="description[]"></td>';
+        newRow1 +=
+            '<td><input class="form-control quantity" type="number" id="quantity_' +
+            count1 +
+            '" name="quantity[]"></td>';
+
+        newRow1 +=
+            '<td><input class="form-control" type="text" id="remarks_' +
+            count1 +
+            '" name="remarks[]"> </td>';
+
+        newRow1 += "</tr>";
+        $("#dnItems").append(newRow1);
+    });
+
+    //Remove Rows
+    $(document).on("click", "#removeRows1", function () {
+        $(".itemRow1:checked").each(function () {
+            $(this).closest("tr").removed;
+        });
+        $("#checkAll1").prop("checked", false);
+    });
 </script>
 
 

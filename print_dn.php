@@ -10,24 +10,20 @@ $mpdf = new \Mpdf\Mpdf([
 require_once("connection/connection.php");
 $id = $_GET["id"];
 
-$query = "SELECT * FROM invoice WHERE i_id = " . $id;
+$query = "SELECT * FROM deliver_note WHERE d_id = " . $id;
 $stmt = $conn->query($query);
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if ($rows) {
-    $i_id = $rows[0]['i_id'];
-    $i_reference = $rows[0]['i_refference'];
-    $currency = $rows[0]['i_currency'];
-    $i_clientId = $rows[0]['i_clientId'];
-    $i_subTotal = $rows[0]['i_subTotal'];
-    $i_vatAmount = $rows[0]['i_vatAmount'];
-    $i_total = $rows[0]['i_total'];
-    $i_remarks = $rows[0]['i_remarks'];
-    $i_date = $rows[0]['i_date'];
+    $i_id = $rows[0]['d_id'];
+    $i_reference = $rows[0]['d_refference'];
+    $i_clientId = $rows[0]['d_clientId'];
+    $i_remarks = $rows[0]['d_remarks'];
+    $i_date = $rows[0]['d_date'];
 
 
 }
 
-$query2 = "SELECT * FROM clients WHERE c_id = " . $i_clientId;
+$query2 = "SELECT * FROM clients WHERE c_id = " . $d_clientId;
 $stmt2 = $conn->query($query2);
 $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
 if ($row2) {
@@ -37,17 +33,15 @@ if ($row2) {
     $s_phone = $row2['c_phone'];
 }
 
-$query3 = "SELECT * FROM invoice_products WHERE ip_i_id = " . $id;
+$query3 = "SELECT * FROM delivery_products WHERE dp_d_id = " . $id;
 $stmt3 = $conn->query($query3);
 $rows3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 $table = '';
 foreach ($rows3 as $product) {
     $table .= "<tr>
-                    <td style='border: solid 1px black; width: 40%; padding: 8px;'>" . $product['ip_description'] . "</td>
-                    <td style='border: solid 1px black; width: 10%; padding: 8px;'>" . $product['ip_quantity'] . "</td>
-                    <td style='border: solid 1px black; width: 18%; padding: 8px;'>" . $product['ip_unitPrice'] . "</td>
-                    <td style='border: solid 1px black; width: 18%; padding: 8px;'>" . $product['ip_totalPrice'] . "</td>
-                    <td style='border: solid 1px black; width: 14%; padding: 8px;'>" . $product['ip_remarks'] . "</td>
+                    <td style='border: solid 1px black; width: 40%; padding: 8px;'>" . $product['dp_description'] . "</td>
+                    <td style='border: solid 1px black; width: 10%; padding: 8px;'>" . $product['dp_quantity'] . "</td>
+                    <td style='border: solid 1px black; width: 14%; padding: 8px;'>" . $product['dp_remarks'] . "</td>
                </tr>";
 }
 
@@ -71,7 +65,7 @@ $row6 = $stmt6->fetch(PDO::FETCH_ASSOC);
 if ($row6) {
     $o_brn = $row6['o_value'];
 }
-$query7 = "SELECT * FROM organisation WHERE o_id=3";
+$query7 = "SELECT * FROM organisation WHERE o_id=4";
 $stmt7 = $conn->query($query7);
 $row7 = $stmt7->fetch(PDO::FETCH_ASSOC);
 if ($row7) {
@@ -89,17 +83,16 @@ $html = "<body>
                 <tr>
                     <td style='width: 33%;'>" . $o_name . "</td>
                     <td style='width: 33%;'>Supplier: " . $c_name . "</td>
-                    <td style='width: 33%; text-align: right;'>Invoice Reference: " . $i_reference . "</td>
+                    <td style='width: 33%; text-align: right;'>Delivery Note Reference: " . $i_reference . "</td>
                 </tr>
                 <tr>
                     <td>BRN:" . $o_brn . "</td>
                     <td>Phone: " . $c_phone . "</td>
-                    <td style='text-align: right;'>Currency: " . $currency . "</td>
                 </tr>
                 <tr>
                     <td>Vat:" . $o_vat . "</td>
                     <td>Address: " . $c_address . "</td>
-                    <td style='text-align: right;'>Invoice Date: " . $i_date . "</td>
+                    <td style='text-align: right;'>Deliver Note Date: " . $i_date . "</td>
                 </tr>
                 
             </table>
@@ -109,33 +102,12 @@ $html = "<body>
                     <tr>
                         <th style='border: solid 1px black; width: 40%; padding: 8px;'>Description</th>
                         <th style='border: solid 1px black; width: 10%; padding: 8px;'>Quantity</th>
-                        <th style='border: solid 1px black; width: 18%; padding: 8px;'>Unit Price</th>
-                        <th style='border: solid 1px black; width: 18%; padding: 8px;'>Total Price</th>
                         <th style='border: solid 1px black; width: 14%; padding: 8px;'>Remarks</th>
                     </tr>
                 </thead>
                 <tbody>
                     " . $table . "
-                    <tr>
-                    <td></td>
-                    <td></td>
-                    <td style='border: solid 1px black; width: 40%; padding: 8px;font-weight:bold;'>Sub Total</td>
-                    <td style='border: solid 1px black; width: 40%; padding: 8px;'>" . $i_subTotal . "</td>
-                    <td></td>
-                    </tr>
-                    <tr>
-                    <td></td>
-                    <td></td>
-                    <td style='border: solid 1px black; width: 40%; padding: 8px;font-weight:bold;'>Vat Ammount</td>
-                    <td style='border: solid 1px black; width: 40%; padding: 8px;'>" . $i_vatAmount . "</td>
-                    <td></td>
-                    </tr><tr>
-                    <td></td>
-                    <td></td>
-                    <td style='border: solid 1px black; width: 40%; padding: 8px;font-weight:bold;'>Total</td>
-                    <td style='border: solid 1px black; width: 40%; padding: 8px;'>" . $i_total . "</td>
-                    <td></td>
-                    </tr>
+                
                 </tbody>
             </table>
             <hr />

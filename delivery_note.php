@@ -39,7 +39,7 @@
 
             <div class="row  mb-4">
                 <div class="col-12">
-                    <a href="add_delivery_note.php">
+                    <a href="new_delivery_note.php">
                         <button class="btn btn-primary">Create New Delivery Note</button>
                     </a>
                 </div>
@@ -54,8 +54,8 @@
                         <th>View</th>
                         <th>ID</th>
                         <th>Refference</th>
-                        <th>Name</th>
-                        <th>Type</th>
+                        <th>Client</th>
+                        <th>Issued By</th>
                         <th>Date Issued</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -63,26 +63,22 @@
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM delivery_note";
+                    $query = "SELECT * FROM delivery_note d JOIN clients c ON c.c_id = d.d_clientId";
                     $stmt = $conn->query($query);
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($rows as $row):
 
-                        if ($row['sn_cs_type'] == "Client") {
-                            $query1 = "SELECT * FROM clients WHERE " . $row['dn_cs_id'] . " = c_id  ";
-                            $stmt1 = $conn->query($query1);
-                            $rows1 = $stmt1->fetch(PDO::FETCH_ASSOC);
-                            $rows1[''];
-                        }
+                        $stmt = $conn->query($query);
+                        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         echo "<tr>
-                    <td><a href='view_dn.php?id=" . $row['dn_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
-                    <td>" . $row['dn_id'] . "</td>
-                    <td>" . $row['dn_refference'] . "</td>
-                    <td>" . $row['dn_supplier_client_name'] . "</td>
-                    <td>" . $row['dn_cs_type'] . "</td>
-                    <td>" . $row['dn_date'] . "</td>
-                     <td><a href='edit_dn.php?id=" . $row['dn_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
-                    <td><button class='btn btn-danger' onclick='deleteDn(" . $row['dn_id'] . ")'>Delete</button></td>
+                    <td><a href='view_dn.php?id=" . $row['d_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
+                    <td>" . $row['d_id'] . "</td>
+                    <td>" . $row['d_refference'] . "</td>
+                    <td>" . $row['c_firstName'] . " " . $row['c_lastName'] . "</td>
+                    <td>" . $row['d_user'] . "</td>
+                    <td>" . $row['d_date'] . "</td>
+                     <td><a href='edit_delivery_note.php?id=" . $row['d_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
+                    <td><button class='btn btn-danger' onclick='deleteDn(" . $row['d_id'] . ")'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>
@@ -100,7 +96,7 @@
         });
     </script>
     <script>
-        function deleteDn(dnId) {
+        function deleteDn(dId) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
@@ -114,7 +110,7 @@
                     $.ajax({
                         type: 'POST',
                         url: 'delete_dn.php',
-                        data: { dnId: dnId },
+                        data: { dId: dId },
                         success: function (response) {
                             // Reload the page or update the table after successful deletion
                             location.reload();

@@ -47,14 +47,18 @@
                         <th>View</th>
                         <th>ID</th>
                         <th>Refference</th>
-
+                        <th>Client</th>
+                        <th>Issued By</th>
+                        <th>Total</th>
+                        <th>Date Issued</th>
                         <th>Edit</th>
+                        <th>Reprint</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM invoice";
+                    $query = "SELECT * FROM invoice i JOIN clients c WHERE i.i_clientId = c.c_id";
                     $stmt = $conn->query($query);
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($rows as $row):
@@ -62,7 +66,14 @@
                     <td><a href='view_in.php?id=" . $row['i_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
                     <td>" . $row['i_id'] . "</td>
                     <td>" . $row['i_refference'] . "</td>
+                    <td>" . $row['c_firstName'] . " " . $row['c_lastName'] . "</td>
+                    <td>" . $row['i_user'] . "</td>
+                    <td>" . $row['i_total'] . "</td>
+                    <td>" . $row['i_date'] . "</td>
+
+
                      <td><a href='edit_invoice.php?id=" . $row['i_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
+                     <td><a href='print_in.php?id=" . $row['i_id'] . "' target='_blank'><button class='btn btn-primary'>Reprint</button></a></td>
                     <td><button class='btn btn-danger' onclick='deleteIn(" . $row['i_id'] . ")'>Delete</button></td>
                 </tr>";
                     endforeach;

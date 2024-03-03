@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $unitPrice = $_POST['unitPrice'][$key];
             $totalPrice = $_POST['totalPrice'][$key];
             $remarks = $_POST['remarks'][$key];
-            echo $_POST['totalPrice'][$key];
+
             // Insert into po_products table
             $insertSql = "INSERT INTO po_products (pop_description, pop_quantity, pop_unitPrice, pop_totalPrice, pop_remarks, pop_po_id) 
                     VALUES (:description, :quantity, :unitPrice, :totalPrice, :remarks, :po_id)";

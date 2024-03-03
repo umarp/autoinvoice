@@ -1,15 +1,13 @@
 <?php
 include("./connection/connection.php");
-
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the maximum reference from the purchase_order table
-    $stmt = $conn->prepare("SELECT MAX(i_refference) AS ref FROM invoice");
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maxValue = $result['ref'];
-    $ref = $maxValue + 1;
 
-    // Extract data from the form
+
+    // Extract data from the form   
+
+
+    $i_id = $_POST['i_id'];
     $clientId = $_POST['clientName'];
     $currency = $_POST['currency'];
     $generalRemarks = $_POST['generalRemarks'];
@@ -17,9 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vatAmount = $_POST['vatAmount'];
     $total = $_POST['total'];
 
-    // Assuming 'currency' is the user value
-    $user = 'asd';
-    $date = date("d-m-y");
+    $user = $_SESSION['userLogin'];
+
 
     try {
         // Insert into the purchase_order table
@@ -30,9 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 i_vatAmount = :vatAmount, 
                 i_total = :total, 
                 i_remarks = :generalRemarks, 
-                i_user = :user, 
-                i_date = :date 
-                WHERE i_refference = :ref";
+                i_user = :user
+
+                WHERE i_id = :i_id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':clientId', $clientId);
         $stmt->bindParam(':currency', $currency);
@@ -41,11 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':total', $total);
         $stmt->bindParam(':generalRemarks', $generalRemarks);
         $stmt->bindParam(':user', $user);
-        $stmt->bindParam(':date', $date);
-        $stmt->bindParam(':ref', $ref);
+
+        $stmt->bindParam(':i_id', $i_id);
         $stmt->execute();
 
-
+        // Delete existing product details associated with this invoice
+        $deleteSql = "DELETE FROM invoice_products WHERE ip_i_id = :i_id";
+        $deleteStmt = $conn->prepare($deleteSql);
+        $deleteStmt->bindParam(':i_id', $i_id);
+        $deleteStmt->execute();
         // Loop through the product details
         foreach ($_POST['description'] as $key => $description) {
             $quantity = $_POST['quantity'][$key];
@@ -53,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $totalPrice = $_POST['totalPrice'][$key];
             $remarks = $_POST['remarks'][$key];
 
-            // Insert into po_products table
+            // Insert into i_products table
             $sql = "INSERT INTO invoice_products (ip_description, ip_quantity,ip_unitPrice,ip_totalPrice, ip_remarks, ip_i_id) 
                     VALUES (:description, :quantity, :unitPrice, :totalPrice, :remarks, :i_id)";
             $stmt = $conn->prepare($sql);
