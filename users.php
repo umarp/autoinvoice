@@ -50,7 +50,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
-                        <th>Department</th>
+                        <th>Role</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -67,7 +67,7 @@
                     <td>" . $row['l_firstName'] . " </td>
                     <td>" . $row['l_lastName'] . " </td>
                     <td>" . $row['l_email'] . " </td>
-                    <td>" . $row['l_department'] . " </td>
+                    <td>" . $row['l_role'] . " </td>
                     <td><a href='edit_user.php?id=" . $row['l_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
                     <td><button class='btn btn-danger' onclick='deleteUser(" . $row['l_id'] . ")'>Delete</button></td>
                 </tr>";

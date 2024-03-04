@@ -10,14 +10,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email = $_POST["email"];
   $password = $_POST["password"];
   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-  $department = $_POST["department"];
+  $role = $_POST["role"];
   $accessInvoice = isset($_POST["accessInvoice"]) ? 1 : 0;
   $accessPurchaseOrder = isset($_POST["accessPurchaseOrder"]) ? 1 : 0;
   $accessDeliveryNote = isset($_POST["accessDeliveryNote"]) ? 1 : 0;
 
   // Prepare the SQL statement
-  $sql = "INSERT INTO login (l_firstName, l_lastName, l_email, l_password, l_department, l_invoice, l_purchaseOrder, l_deliveryNote)
-                VALUES (:firstName, :lastName, :email, :password, :department, :accessInvoice, :accessPurchaseOrder, :accessDeliveryNote)";
+  $sql = "INSERT INTO login (l_firstName, l_lastName, l_email, l_password, l_role, l_invoice, l_purchaseOrder, l_deliveryNote)
+                VALUES (:firstName, :lastName, :email, :password, :role, :accessInvoice, :accessPurchaseOrder, :accessDeliveryNote)";
 
   // Use prepared statements to prevent SQL injection
   $stmt = $conn->prepare($sql);
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $stmt->bindParam(':lastName', $lastName);
   $stmt->bindParam(':email', $email);
   $stmt->bindParam(':password', $hashedPassword);
-  $stmt->bindParam(':department', $department);
+  $stmt->bindParam(':role', $role);
   $stmt->bindParam(':accessInvoice', $accessInvoice, PDO::PARAM_INT);
   $stmt->bindParam(':accessPurchaseOrder', $accessPurchaseOrder, PDO::PARAM_INT);
   $stmt->bindParam(':accessDeliveryNote', $accessDeliveryNote, PDO::PARAM_INT);
@@ -72,11 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <input type="password" class="form-control" id="password" name="password" required>
         </div>
         <div class="mb-3">
-          <label for="department" class="form-label">Department</label>
-          <select class="form-select" id="department" name="department" required>
-            <option value="sales">Sales</option>
-            <option value="finance">Finance</option>
-            <option value="hr">Human Resources</option>
+          <label for="role" class="form-label">Role</label>
+          <select class="form-select" id="role" name="role" required>
+            <option value="Staff">Staff</option>
+            <option value="Manager">Manager</option>
+            <option value="Admin">Admin</option>
           </select>
         </div>
         <div class="mb-3 form-check">

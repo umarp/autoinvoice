@@ -20,6 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         session_start();
         $_SESSION['userLogin'] = $l_email;
+        $_SESSION['userId'] = $user['l_id'];
+        $_SESSION['userRole'] = $user['l_role'];
+        $_SESSION['userInvoice'] = $user['l_invoice'];
+        $_SESSION['userPo'] = $user['l_purchaseOrder'];
+        $_SESSION['userDn'] = $user['l_deliveryNote'];
+
         header('Location: index.php');
 
         exit;

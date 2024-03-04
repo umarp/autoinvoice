@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email = $_POST["email"];
   $password = $_POST["password"];
   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-  $department = $_POST["department"];
+  $role = $_POST["role"];
   $accessInvoice = isset($_POST["accessInvoice"]) ? 1 : 0;
   $accessPurchaseOrder = isset($_POST["accessPurchaseOrder"]) ? 1 : 0;
   $accessDeliveryNote = isset($_POST["accessDeliveryNote"]) ? 1 : 0;
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             l_lastName = :lastName,
             l_email = :email,
             l_password = :password,
-           l_department = :department,
+           l_role = :role,
             l_invoice = :accessInvoice,
             l_purchaseOrder = :accessPurchaseOrder,
             l_deliveryNote = :accessDeliveryNote
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $stmt->bindParam(':lastName', $lastName);
   $stmt->bindParam(':email', $email);
   $stmt->bindParam(':password', $hashedPassword);
-  $stmt->bindParam(':department', $department);
+  $stmt->bindParam(':role', $role);
   $stmt->bindParam(':accessInvoice', $accessInvoice, PDO::PARAM_INT);
   $stmt->bindParam(':accessPurchaseOrder', $accessPurchaseOrder, PDO::PARAM_INT);
   $stmt->bindParam(':accessDeliveryNote', $accessDeliveryNote, PDO::PARAM_INT);
@@ -101,14 +101,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
               <div class="col-6 mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password"
-                  value="<?php echo $user['l_password']; ?>" required>
+                <input type="password" class="form-control" id="password" name="password">
               </div>
 
               <div class="col-6 mb-3">
-                <label for="department" class="form-label">Department</label>
-                <input type="text" class="form-control" id="department" name="department"
-                  value="<?php echo $user['l_department']; ?>" required>
+                <label for="role" class="form-label">Role</label>
+                <select class="form-select" id="role" name="role" required>
+                  <option value="<?php echo $user['l_role']; ?>">
+                    <?php echo $user['l_role']; ?>
+                  </option>
+                  <option value="Staff">Staff</option>
+                  <option value="Manager">Manager</option>
+                  <option value="Admin">Admin</option>
+                </select>
               </div>
             </div>
             <div class="col-6 mb-3 form-check">

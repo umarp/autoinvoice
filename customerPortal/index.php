@@ -26,11 +26,16 @@
 </head>
 
 <body>
+    <?php
+    $stmtlogo = $conn->prepare("SELECT * FROM organisation WHERE o_id = 1");
+    $stmtlogo->execute();
+    $logovalue = $stmtlogo->fetch(PDO::FETCH_ASSOC);
+    $logo = $logovalue['o_value'];
+    ?>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="../image/logo/logo-no-background.png" alt="Logo" width="100"
-                    class="d-inline-block align-text-top">
+                <img src="../<?php echo $logo; ?>" alt="Logo" width="100" class="d-inline-block align-text-top">
 
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"

@@ -21,7 +21,7 @@ body {
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: 0.5s;
-    background-image: url("image/background/6.jpg");
+    background-image: url("image/background/7.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -126,7 +126,7 @@ a {
 .nav_link {
     position: relative;
     color: var(--first-color-light);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     transition: 0.3s;
 }
 .nav_link:hover {

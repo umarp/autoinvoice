@@ -14,7 +14,7 @@
   </div>
   <div class="title">AutoInvoice+</div>
   <div>
-    <a href="logout.php" class="nav_link">
+    <a href="logout.php" class="btn btn-danger">
       <i class='bx bx-log-out nav_icon'></i>
       <span class="nav_name">Sign Out</span>
     </a>
@@ -40,37 +40,64 @@
           <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
           <span class="nav_name">Client</span>
         </a>
+        <?php
 
-        <a href="purchase_order.php" class="nav_link ">
-          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
-          <span class="nav_name">Purchase Orders</span>
-        </a>
+        if ($_SESSION['userPo'] == "1") {
 
-        <a href="invoice.php" class="nav_link ">
-          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
-          <span class="nav_name">Invoice</span>
-        </a>
+          ?>
+          <a href="purchase_order.php" class="nav_link ">
+            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <span class="nav_name">Purchase Orders</span>
+          </a>
+          <?php
+        }
+        if ($_SESSION['userInvoice'] == "1") {
 
-        <a href="delivery_note.php" class="nav_link ">
-          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
-          <span class="nav_name">Delivery Note</span>
-        </a>
+          ?>
+          <a href="invoice.php" class="nav_link ">
+            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <span class="nav_name">Invoice</span>
+          </a>
+          <?php
+        }
+        if ($_SESSION['userDn'] == "1") {
 
-        <a href="customerLogin.php" class="nav_link ">
-          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
-          <span class="nav_name">Manage <br>Customer Login</span>
-        </a>
+          ?>
+          <a href="delivery_note.php" class="nav_link ">
+            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <span class="nav_name">Delivery Note</span>
+          </a>
+          <?php
+        }
+        if ($_SESSION['userRole'] == "Admin" || $_SESSION['userRole'] == "Manager") {
 
-        <a href="users.php" class="nav_link ">
-          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
-          <span class="nav_name">Manage Users</span>
-        </a>
-        <a href="organisation.php" class="nav_link ">
-          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
-          <span class="nav_name">Manage <br>Organisation</span>
-        </a>
+          ?>
+          <a href="customerLogin.php" class="nav_link ">
+            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <span class="nav_name">Manage <br>Customer Login</span>
+          </a>
+          <?php
+        }
 
 
+        if ($_SESSION['userRole'] == "Admin") {
+
+
+          ?>
+          <a href="users.php" class="nav_link ">
+            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <span class="nav_name">Manage Users</span>
+          </a>
+
+          <a href="organisation.php" class="nav_link ">
+            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <span class="nav_name">Manage <br>Organisation</span>
+          </a>
+
+          <?php
+        }
+
+        ?>
       </div>
     </div>
 
