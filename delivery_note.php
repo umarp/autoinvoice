@@ -17,25 +17,7 @@
             <h4 class="mt-2">Delivery Note</h4>
             <hr>
 
-            <div class="row mt-2 mb-2">
-                <div class="col-3">
-                    <div class="box">number of users: 10</div>
-                </div>
-                <div class="col-3">
-                    <div class="box">number of users: 10</div>
-                </div>
-                <div class="col-3">
-                    <div class="box">number of users: 10</div>
-                </div>
 
-
-                <div class="col-3">
-                    <a href="add_user.php">
-                        <div class="box">Add User</div>
-                    </a>
-                </div>
-            </div>
-            <hr>
 
             <div class="row  mb-4">
                 <div class="col-12">
@@ -63,7 +45,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM delivery_note d JOIN clients c ON c.c_id = d.d_clientId";
+                    $query = "SELECT * FROM delivery_note d , clients c , LOGIN l WHERE c.c_id = d.d_clientId AND d.d_user = l.l_id";
                     $stmt = $conn->query($query);
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($rows as $row):
@@ -75,7 +57,7 @@
                     <td>" . $row['d_id'] . "</td>
                     <td>" . $row['d_refference'] . "</td>
                     <td>" . $row['c_firstName'] . " " . $row['c_lastName'] . "</td>
-                    <td>" . $row['d_user'] . "</td>
+                    <td>" . $row['l_firstName'] . " " . $row['l_lastName'] . "</td>
                     <td>" . $row['d_date'] . "</td>
                      <td><a href='edit_delivery_note.php?id=" . $row['d_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
                     <td><button class='btn btn-danger' onclick='deleteDn(" . $row['d_id'] . ")'>Delete</button></td>

@@ -15,23 +15,7 @@
     <div class="container">
         <div class="container-fluid">
             <h4 class="mt-2">View Supplier</h4>
-            <hr>
-            <div class="row mt-2 mb-2">
-                <div class="col-3">
-                    <div class="box">number of users: 10</div>
-                </div>
-                <div class="col-3">
-                    <div class="box">number of users: 10</div>
-                </div>
-                <div class="col-3">
-                    <div class="box">number of users: 10</div>
-                </div>
-                <div class="col-3">
-                    <a href="add_supplier.php">
-                        <div class="box">Add Supplier</div>
-                    </a>
-                </div>
-            </div>
+
 
             <hr>
             <div class="row mt-2 mb-4">

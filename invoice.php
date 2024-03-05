@@ -16,23 +16,7 @@
         <div class="container-fluid">
             <h4 class="mt-2">View Invoice</h4>
             <hr>
-            <div class="row mt-2 mb-2">
-                <div class="col-3">
-                    <div class="box">number of users: 10</div>
-                </div>
-                <div class="col-3">
-                    <div class="box">number of users: 10</div>
-                </div>
-                <div class="col-3">
-                    <div class="box">number of users: 10</div>
-                </div>
-                <div class="col-3">
-                    <a href="add_user.php">
-                        <div class="box">Add User</div>
-                    </a>
-                </div>
-            </div>
-            <hr>
+
             <div class="row mt-2 mb-4">
                 <div class="col-12">
                     <a href="new_invoice.php">
@@ -58,7 +42,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM invoice i JOIN clients c WHERE i.i_clientId = c.c_id";
+                    $query = "SELECT * FROM invoice i, clients c, login l  WHERE i.i_clientId = c.c_id AND l.l_id = i.i_user";
                     $stmt = $conn->query($query);
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($rows as $row):
@@ -67,7 +51,7 @@
                     <td>" . $row['i_id'] . "</td>
                     <td>" . $row['i_refference'] . "</td>
                     <td>" . $row['c_firstName'] . " " . $row['c_lastName'] . "</td>
-                    <td>" . $row['i_user'] . "</td>
+                    <td>" . $row['l_firstName'] . "</td>
                     <td>" . $row['i_total'] . "</td>
                     <td>" . $row['i_date'] . "</td>
 
