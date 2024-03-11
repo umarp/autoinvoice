@@ -34,8 +34,11 @@
                         <th>View</th>
                         <th>ID</th>
                         <th>Refference</th>
-                        <th>Total</th>
+                        <th>Supplier</th>
                         <th>Issued By</th>
+                        <th>Total</th>
+                        <th>Date Issued</th>
+
                         <th>Edit</th>
                         <th>Reprint</th>
                         <th>Delete</th>
@@ -43,7 +46,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM purchase_order";
+                    $query = "SELECT * FROM purchase_order po, supplier s, login l WHERE po.po_supplierId  = s.s_id AND l.l_id = po.po_user";
                     $stmt = $conn->query($query);
                     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($rows as $row):
@@ -51,13 +54,15 @@
                     <td><a href='view_po.php?id=" . $row['po_id'] . "'><button class='btn btn-secondary'>View</button></a></td>
                     <td>" . $row['po_id'] . "</td>
                     <td>" . $row['po_refference'] . "</td>
+                    <td>" . $row['s_name'] . "</td>
+                    <td>" . $row['l_firstName'] . "</td>
                     <td>" . $row['po_total'] . "</td>
-                    <td>" . $row['po_user'] . "</td>
+                    <td>" . $row['po_date'] . "</td>
 
                     <td><a href='edit_purchase_order.php?id=" . $row['po_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
                     <td><a href='print_po.php?id=" . $row['po_id'] . "' target='_blank'><button class='btn btn-primary'>Reprint</button></a></td>
 
-                    <td><button class='btn btn-danger' onclick='deletePo(" . $row['po_id'] . ")'>Delete</button></td>
+                    <td><button class='btn btn-danger' onclick='deletePo( " . $row['po_id'] . ",this.closest(`tr`))'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>
@@ -75,7 +80,7 @@
         });
     </script>
     <script>
-        function deletePo(poId) {
+        function deletePo(poId, row) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
@@ -91,8 +96,13 @@
                         url: 'delete_po.php',
                         data: { poId: poId },
                         success: function (response) {
-                            // Reload the page or update the table after successful deletion
-                            location.reload();
+                            // Remove the row from the table
+                            $(row).remove();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'PO deleted successfully!'
+                            });
                         },
                         error: function (xhr, status, error) {
                             Swal.fire({

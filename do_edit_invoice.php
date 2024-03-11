@@ -3,10 +3,7 @@ include("./connection/connection.php");
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-
     // Extract data from the form   
-
-
     $i_id = $_POST['i_id'];
     $clientId = $_POST['clientName'];
     $currency = $_POST['currency'];
@@ -15,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vatAmount = $_POST['vatAmount'];
     $total = $_POST['total'];
 
-    $user = $_SESSION['userLogin'];
+    $user = $_SESSION['userId'];
 
 
     try {
@@ -70,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-        // header("Location: invoice.php");
+        header("Location: invoice.php");
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

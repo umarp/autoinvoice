@@ -41,7 +41,7 @@
         <div class="container-fluid">
 
             <h4>Purchase Order</h4>
-            <form class="form" action="save_purchase_order.php" method="POST">
+            <form class="form" action="save_purchase_order.php" method="POST" target="_blank" onsubmit="validate()">
 
                 <div class="row">
                     <div class="col-6">
@@ -73,8 +73,7 @@
                                 </div>
                                 <div class="col">
                                     <label>&nbsp;</label>
-                                    <select name="companyName" class="result form-control" id="selectBox">
-                                        <option>Click to select</option>
+                                    <select name="companyName" class="result form-control" id="selectBox" required>
                                     </select>
                                 </div>
                             </div>
@@ -130,40 +129,7 @@
 
 
                     </div>
-                    <style>
-                        .checkbox-button {
-                            margin-bottom: 0;
-                            cursor: pointer;
-                        }
 
-                        .checkbox-button input[type="checkbox"] {
-                            display: none;
-                        }
-
-                        .checkbox-button label {
-                            color: white;
-                            display: inline-block;
-                            padding: 6px 12px;
-                            margin-bottom: 0;
-                            text-align: center;
-                            white-space: nowrap;
-                            vertical-align: middle;
-                            cursor: pointer;
-                            border: 1px solid transparent;
-                            border-radius: 4px;
-                            background-color: grey;
-                        }
-
-                        .checkbox-button label:hover {
-                            background-color: #f5f5f5;
-                        }
-
-                        .checkbox-button input[type="checkbox"]:checked+label {
-                            background-color: #5cb85c;
-                            color: #fff;
-                            border-color: #4cae4c;
-                        }
-                    </style>
                     <div class="row mt-2">
                         <div class="col-md-4">
                             <div class="btn-group" role="group">
@@ -172,17 +138,18 @@
                             </div>
                         </div>
                         <div class="col-md-4 d-flex justify-content-center">
-                            <a class="btn btn-secondary" onclick="calculate()">ReCalculate</a>
+                            <a class="btn btn-secondary" onclick="calculateTotal()">ReCalculate</a>
                         </div>
                         <div class="col-md-4 d-flex justify-content-end">
                             <label for="ExcludeVat">Vat options</label>
                             <span class="checkbox-button">
-                                <input type="checkbox" name="excludeVat" id="excludeVat">
+                                <input type="checkbox" name="excludeVat" id="excludeVat"
+                                    onchange="handleVatChange(this)">
                                 <label for="excludeVat">Exclude</label>
                             </span>
                             <span class="checkbox-button ms-2">
                                 <input class="btn btn-success" type="checkbox" name="includeVat" id="includeVat"
-                                    value="includeVat">
+                                    value="includeVat" onchange="handleVatChange(this)">
                                 <label for="includeVat">Include</label>
                             </span>
                         </div>
@@ -210,7 +177,7 @@
                 </div>
 
 
-                <div class="row mt-4 form-box">
+                <div class="row mt-4 mb-2 form-box">
                     <div class="col-12"><label>General Remarks</label>
                         <textarea name="generalRemarks" class="form-control" id="generalRemarks" rows="3"></textarea>
 
@@ -249,7 +216,6 @@
         });
 
         $(document).on("click", "#selectBox", function () {
-            console.log('fu')
             var selectedValue = $(this).val();
             if (selectedValue !== 'Click to select') {
                 $.get("supplierCompanyDetails.php", {
@@ -264,7 +230,11 @@
     });
 
 </script>
-
+<script>
+    function validate() {
+        window.location.href = "purchase_order.php"
+    }
+</script>
 
 
 

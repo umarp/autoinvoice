@@ -31,10 +31,11 @@ $query2 = "SELECT * FROM clients WHERE c_id = " . $i_clientId;
 $stmt2 = $conn->query($query2);
 $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
 if ($row2) {
-    $s_name = $row2['c_name'];
-    $s_email = $row2['c_email'];
-    $s_address = $row2['c_address'];
-    $s_phone = $row2['c_phone'];
+    $c_name = $row2['c_firstName'];
+    $c_namel = $row2['c_lastName'];
+    $c_email = $row2['c_email'];
+    $c_address = $row2['c_address'];
+    $c_phone = $row2['c_phone'];
 }
 
 $query3 = "SELECT * FROM invoice_products WHERE ip_i_id = " . $id;
@@ -77,12 +78,18 @@ $row7 = $stmt7->fetch(PDO::FETCH_ASSOC);
 if ($row7) {
     $o_IMessage = $row7['o_value'];
 }
+$query8 = "SELECT * FROM organisation WHERE o_id=1";
+$stmt8 = $conn->query($query8);
+$row8 = $stmt8->fetch(PDO::FETCH_ASSOC);
+if ($row8) {
+    $o_logo = $row8['o_value'];
+}
 
 $html = "<body>
             <table style='width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden;'>
                 <tr>
                     <td colspan='3' style='text-align: center;'>
-                        <img src='image\logo\logo-no-background.png' style='height: 40px;' />
+                        <img src='" . $o_logo . "' style='height: 70px;'  />
                     </td>
                 </tr>
                 <hr>

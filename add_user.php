@@ -55,41 +55,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <h4>Add User</h4>
       <form class="form-box" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <div class="mb-3">
-          <label for="firstName" class="form-label">First Name</label>
-          <input type="text" class="form-control" id="firstName" name="firstName" required>
-        </div>
-        <div class="mb-3">
-          <label for="lastName" class="form-label">Last Name</label>
-          <input type="text" class="form-control" id="lastName" name="lastName" required>
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" name="password" required>
-        </div>
-        <div class="mb-3">
-          <label for="role" class="form-label">Role</label>
-          <select class="form-select" id="role" name="role" required>
-            <option value="Staff">Staff</option>
-            <option value="Manager">Manager</option>
-            <option value="Admin">Admin</option>
-          </select>
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="accessInvoice" name="accessInvoice">
-          <label class="form-check-label" for="accessInvoice">Access to Invoice</label>
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="accessPurchaseOrder" name="accessPurchaseOrder">
-          <label class="form-check-label" for="accessPurchaseOrder">Access to Purchase Order</label>
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="accessDeliveryNote" name="accessDeliveryNote">
-          <label class="form-check-label" for="accessDeliveryNote">Access to Delivery Note</label>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" required>
+          </div>
+          <div class="col-6 mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" required>
+          </div>
+          <div class="col-6 mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="col-6 mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" minlength="8" required>
+            <div class="form-text">Password should be at least 8 characters.</div>
+          </div>
+          <div class="col-6 mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select class="form-select" id="role" name="role" required>
+              <option value="Staff">Staff</option>
+              <option value="Manager">Manager</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+          <div class=" mb-3 ms-3 form-check">
+            <input type="checkbox" class="form-check-input" id="accessInvoice" name="accessInvoice">
+            <label class="form-check-label" for="accessInvoice">Access to Invoice</label>
+          </div>
+          <div class=" mb-3 ms-3 form-check">
+            <input type="checkbox" class="form-check-input" id="accessPurchaseOrder" name="accessPurchaseOrder">
+            <label class="form-check-label" for="accessPurchaseOrder">Access to Purchase Order</label>
+          </div>
+          <div class=" mb-3 ms-3 form-check">
+            <input type="checkbox" class="form-check-input" id="accessDeliveryNote" name="accessDeliveryNote">
+            <label class="form-check-label" for="accessDeliveryNote">Access to Delivery Note</label>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

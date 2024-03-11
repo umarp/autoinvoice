@@ -52,7 +52,7 @@
                     <td>" . $row['l_email'] . " </td>
                     <td>" . $row['l_role'] . " </td>
                     <td><a href='edit_user.php?id=" . $row['l_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
-                    <td><button class='btn btn-danger' onclick='deleteUser(" . $row['l_id'] . ")'>Delete</button></td>
+                    <td><button class='btn btn-danger' onclick='deleteUser(" . $row['l_id'] . ",this.closest(`tr`))'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>
@@ -70,7 +70,7 @@
         });
     </script>
     <script>
-        function deleteUser(userId) {
+        function deleteUser(userId, row) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
@@ -86,8 +86,13 @@
                         url: 'delete_user.php',
                         data: { userId: userId },
                         success: function (response) {
-                            // Reload the page or update the table after successful deletion
-                            location.reload();
+                            // Remove the row from the table
+                            $(row).remove();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'User deleted successfully!'
+                            });
                         },
                         error: function (xhr, status, error) {
                             Swal.fire({

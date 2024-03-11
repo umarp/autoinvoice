@@ -21,6 +21,27 @@
             border-radius: 5px;
             padding: 20px;
             margin-bottom: 20px;
+            box-shadow: 0px 0px 5px 5px grey;
+        }
+
+        body {
+
+
+            font-family: "Lato", sans-serif;
+            background-image: url("../image/background/7.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .navbar {
+
+            background-image: url("../image/background/1.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
         }
     </style>
 </head>
@@ -60,7 +81,7 @@
                     </li>
                 </ul>
                 <span class="navbar-text">
-                    <a href="logout.php"><button class="btn btn-secondary">Logout</button></a>
+                    <a href="logout.php"><button class="btn btn-danger">Sign Out</button></a>
                 </span>
             </div>
         </div>
@@ -104,7 +125,7 @@
                                         <p>From: ' . $row['po_companyAttn'] . '</p>
                                         <p>To: ' . $row['po_supplierAttn'] . '</p>
                                     </div>
-                                        <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <p>Total Amount: ' . $row['po_total'] . '</p>
                                         <p>Date Issued: ' . $row['po_date'] . '</p>
                                     </div>

@@ -3,6 +3,7 @@
 <?php
 session_start();
 include("./connection/connection.php");
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the maximum reference from the purchase_order table
@@ -20,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vatAmount = $_POST['vatAmount'];
     $total = $_POST['total'];
 
-    $user = $_SESSION['userLogin'];
+    $user = $_SESSION['userId'];
     $date = date("y-m-d");
 
     try {
@@ -62,10 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
         }
 
-        echo '<form action="print_in.php" method="GET" id="form1"  target="_blank">
-            <input type="text" name="id" value="' . $i_id . '">
-        </form>';
-        echo '<script>console.log("??");document.getElementById("form1").submit();</script>';
+        header("Location: print_in.php?id=" . $i_id . "");
 
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

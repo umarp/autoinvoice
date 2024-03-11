@@ -11,7 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $d_id = $_POST['d_id'];
     $clientId = $_POST['clientName'];
     $generalRemarks = $_POST['generalRemarks'];
-    $user = $_SESSION['userLogin'];
+
+    $user = $_SESSION['userId'];
 
     try {
         // Insert into the purchase_order table
@@ -39,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $quantity = $_POST['quantity'][$key];
             $remarks = $_POST['remarks'][$key];
 
-            // Insert into po_products table
+            // Insert into dn_products table
             $sql = "INSERT INTO delivery_products (dp_description, dp_quantity, dp_remarks, dp_d_id) 
                     VALUES (:description, :quantity, :remarks, :d_id)";
             $stmt = $conn->prepare($sql);
@@ -49,11 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':d_id', $d_id);
             $stmt->execute();
         }
-
-        echo '<form action="print_dn.php" method="GET" id="form1"  target="_blank">
-            <input type="text" name="id" value="' . $d_id . '">
-        </form>';
-        echo '<script>console.log("??");document.getElementById("form1").submit();</script>';
+        header("Location: delivery_note.php");
 
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

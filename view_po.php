@@ -137,10 +137,11 @@ if (isset($_GET['id'])) {
                 <!-- Display product details -->
                 <div class="row mt-4 form-box">
                     <div class="col-12">
-                        <select name="currency" id="currency" class="btn btn-primary" readonly>
-                            <option value="1">Mauritian Rupee (MUR)</option>
-                            <?php echo $po['po_currency']; ?>
-                        </select>
+                        <div class="btn btn-primary" readonly>
+
+                            <?php echo $po_currency; ?>
+
+                        </div>
 
 
                         <table class="table table-bordered table-hover mt-4" id="poItems">
@@ -180,41 +181,6 @@ if (isset($_GET['id'])) {
 
 
                     </div>
-                    <style>
-                        .checkbox-button {
-                            margin-bottom: 0;
-                            cursor: pointer;
-                        }
-
-                        .checkbox-button input[type="checkbox"] {
-                            display: none;
-                        }
-
-                        .checkbox-button label {
-                            color: white;
-                            display: inline-block;
-                            padding: 6px 12px;
-                            margin-bottom: 0;
-                            text-align: center;
-                            white-space: nowrap;
-                            vertical-align: middle;
-                            cursor: pointer;
-                            border: 1px solid transparent;
-                            border-radius: 4px;
-                            background-color: grey;
-                        }
-
-                        .checkbox-button label:hover {
-                            background-color: #f5f5f5;
-                        }
-
-                        .checkbox-button input[type="checkbox"]:checked+label {
-                            background-color: #5cb85c;
-                            color: #fff;
-                            border-color: #4cae4c;
-                        }
-                    </style>
-
 
                     <div class="row">
 
@@ -238,7 +204,7 @@ if (isset($_GET['id'])) {
                 </div>
 
                 <!-- Display subtotal, VAT, total, and general remarks -->
-                <div class="row mt-4 form-box">
+                <div class="row mt-4 mb-4 form-box">
                     <div class="col-12">
                         <label>General Remarks</label>
                         <textarea name="generalRemarks" class="form-control" rows="3" readonly>

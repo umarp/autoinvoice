@@ -64,7 +64,7 @@
                     <td>" . $row['cl_email'] . " </td>
                     <td>" . $clientSupplier . " </td>
                     <td><a href='edit_customerLogin.php?id=" . $row['cl_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
-                    <td><button class='btn btn-danger' onclick='deleteUser(" . $row['cl_id'] . ")'>Delete</button></td>
+                    <td><button class='btn btn-danger' onclick='deleteUser(" . $row['cl_id'] . ",this.closest(`tr`))'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>
@@ -82,7 +82,7 @@
         });
     </script>
     <script>
-        function deleteUser(userId) {
+        function deleteUser(userId, row) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
@@ -98,8 +98,13 @@
                         url: 'delete_customerLogin.php',
                         data: { userId: userId },
                         success: function (response) {
-                            // Reload the page or update the table after successful deletion
-                            location.reload();
+                            // Remove the row from the table
+                            $(row).remove();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Customer login deleted successfully!'
+                            });
                         },
                         error: function (xhr, status, error) {
                             Swal.fire({

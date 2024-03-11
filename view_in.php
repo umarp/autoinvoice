@@ -171,44 +171,7 @@
                             </tbody>
                         </table>
 
-
                     </div>
-                    <style>
-                        .checkbox-button {
-                            margin-bottom: 0;
-                            cursor: pointer;
-                        }
-
-                        .checkbox-button input[type="checkbox"] {
-                            display: none;
-                        }
-
-                        .checkbox-button label {
-                            color: white;
-                            display: inline-block;
-                            padding: 6px 12px;
-                            margin-bottom: 0;
-                            text-align: center;
-                            white-space: nowrap;
-                            vertical-align: middle;
-                            cursor: pointer;
-                            border: 1px solid transparent;
-                            border-radius: 4px;
-                            background-color: grey;
-                        }
-
-                        .checkbox-button label:hover {
-                            background-color: #f5f5f5;
-                        }
-
-                        .checkbox-button input[type="checkbox"]:checked+label {
-                            background-color: #5cb85c;
-                            color: #fff;
-                            border-color: #4cae4c;
-                        }
-                    </style>
-
-
                     <div class="row">
 
                         <div class="col-md-3 form-group">
@@ -232,7 +195,7 @@
                 </div>
 
 
-                <div class="row mt-4 form-box">
+                <div class="row mt-4 mb-4 form-box">
                     <div class="col-12"><label>General Remarks</label>
                         <textarea name="generalRemarks" class="form-control" id="generalRemarks" rows="3" readonly>
                             <?php echo $i_remarks; ?>

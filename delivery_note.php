@@ -40,6 +40,7 @@
                         <th>Issued By</th>
                         <th>Date Issued</th>
                         <th>Edit</th>
+                        <th>Reprint</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -60,7 +61,9 @@
                     <td>" . $row['l_firstName'] . " " . $row['l_lastName'] . "</td>
                     <td>" . $row['d_date'] . "</td>
                      <td><a href='edit_delivery_note.php?id=" . $row['d_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
-                    <td><button class='btn btn-danger' onclick='deleteDn(" . $row['d_id'] . ")'>Delete</button></td>
+                                          <td><a href='print_dn.php?id=" . $row['d_id'] . "' target='_blank'><button class='btn btn-primary'>Reprint</button></a></td>
+
+                    <td><button class='btn btn-danger' onclick='deleteDn(" . $row['d_id'] . ",this.closest(`tr`))'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>
@@ -78,7 +81,7 @@
         });
     </script>
     <script>
-        function deleteDn(dId) {
+        function deleteDn(dId, row) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
@@ -94,9 +97,13 @@
                         url: 'delete_dn.php',
                         data: { dId: dId },
                         success: function (response) {
-                            // Reload the page or update the table after successful deletion
-                            location.reload();
-                            //console.log(response);
+                            // Remove the row from the table
+                            $(row).remove();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Delivery Note deleted successfully!'
+                            });
                         },
                         error: function (xhr, status, error) {
                             Swal.fire({

@@ -4,6 +4,7 @@ require_once("../connection/connection.php");
 $error = 0;
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
     // Retrieve form data
     $cl_email = $_POST['email'];
     $password = $_POST['password'];
@@ -21,16 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         session_start();
         $_SESSION['login'] = $cl_email;
         $_SESSION['type'] = $user['cl_type'];
-
         $_SESSION['company'] = $user['cl_supplierCustomerId'];
 
         header('Location: index.php');
 
-        exit;
+
     } else {
         $error = 1;
     }
 }
+var_dump($_POST);
 ?>
 
 <!DOCTYPE html>

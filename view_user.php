@@ -52,16 +52,12 @@
                                     value="<?php echo $user['l_email']; ?>" readonly>
                             </div>
 
-                            <div class="col-6 mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password"
-                                    value="<?php echo $user['l_password']; ?>" readonly>
-                            </div>
+
 
                             <div class="col-6 mb-3">
-                                <label for="department" class="form-label">Department</label>
-                                <input type="text" class="form-control" id="department" name="department"
-                                    value="<?php echo $user['l_department']; ?>" readonly>
+                                <label for="role" class="form-label">Role</label>
+                                <input type="text" class="form-control" id="role" name="role" value="<?php echo $user['l_role']; ?>"
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-6 mb-3 form-check">

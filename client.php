@@ -58,7 +58,7 @@
                     <td>" . $row['c_dob'] . " </td>
                     <td>" . $row['c_dateAdded'] . " </td>
                     <td><a href='edit_client.php?id=" . $row['c_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
-                    <td><button class='btn btn-danger' onclick='deleteClient(" . $row['c_id'] . ")'>Delete</button></td>
+                    <td><button class='btn btn-danger' onclick='deleteClient(" . $row['c_id'] . ",this.closest(`tr`))'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>
@@ -76,7 +76,7 @@
         });
     </script>
     <script>
-        function deleteClient(clientId) {
+        function deleteClient(clientId, row) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
@@ -92,9 +92,13 @@
                         url: 'delete_client.php',
                         data: { clientId: clientId },
                         success: function (response) {
-                            // Reload the page or update the table after successful deletion
-                            location.reload();
-
+                            // Remove the row from the table
+                            $(row).remove();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Client deleted successfully!'
+                            });
                         },
                         error: function (xhr, status, error) {
                             Swal.fire({

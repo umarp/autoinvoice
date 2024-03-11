@@ -80,11 +80,18 @@ if ($row7) {
     $o_poMessage = $row7['o_value'];
 }
 
+$query8 = "SELECT * FROM organisation WHERE o_id=1";
+$stmt8 = $conn->query($query8);
+$row8 = $stmt8->fetch(PDO::FETCH_ASSOC);
+if ($row8) {
+    $o_logo = $row8['o_value'];
+}
+
 $html = "<body>
             <table style='width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden;'>
                 <tr>
                     <td colspan='3' style='text-align: center;'>
-                        <img src='image\logo\logo-no-background.png' style='height: 40px;' />
+                        <img src='" . $o_logo . "' style='height: 40px;' />
                     </td>
                 </tr>
                 <hr>

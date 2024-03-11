@@ -1,6 +1,6 @@
 <?php
 include("./connection/connection.php");
-
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the maximum reference from the purchase_order table
     $stmt = $conn->prepare("SELECT MAX(po_refference) AS ref FROM purchase_order");
@@ -17,8 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vatAmount = $_POST['vatAmount'];
     $total = $_POST['total'];
 
-    // Assuming 'currency' is the user value
-    $user = 'currency';
+
+    $user = $_SESSION['userId'];
     $date = date("d-m-y");
 
     try {
@@ -60,12 +60,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
         }
 
-        echo '<form method="GET" id="form" action="print_po.php" target="_blank">
-            <input type="hidden" name="id" value="' . $po_id . '">
-            </form>';
 
 
-        header("Location: purchase_order.php");
+        header("Location: print_po.php?id=" . $po_id . "");
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -73,7 +70,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Invalid request";
 }
 ?>
-
-<script>
-    document.getElementById('form');
-</script>

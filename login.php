@@ -2,7 +2,12 @@
 
 require_once("connection/connection.php");
 $error = 0;
+$msg = "";
 // Check if the form is submitted
+if (isset($_GET['message'])) {
+    $msg = $_GET['message'];
+    $error = 1;
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Retrieve form data
     $l_email = $_POST['email'];
@@ -31,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     } else {
         $error = 1;
+        $msg = "Invalid Email or password!!!";
     }
 }
 ?>
@@ -92,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
             <h5 class="mt-2">
                 <?php if ($error == 1) {
-                    echo "Invalid username or password";
+                    echo $msg;
                 } ?>
             </h5>
         </div>

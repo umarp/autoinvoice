@@ -4,6 +4,7 @@
 session_start();
 
 include("./connection/connection.php");
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the maximum reference from the purchase_order table
@@ -17,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $clientId = $_POST['clientName'];
     $generalRemarks = $_POST['generalRemarks'];
 
-    $user = $_SESSION['userLogin'];
+    $user = $_SESSION['userId'];
     $date = date("y-m-d");
 
     try {
@@ -51,10 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
         }
 
-        echo '<form action="print_dn.php" method="GET" id="form1"  target="_blank">
-            <input type="text" name="id" value="' . $d_id . '">
-        </form>';
-        echo '<script>console.log("??");document.getElementById("form1").submit();</script>';
+        header("Location: print_dn.php?id=" . $d_id . "");
 
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

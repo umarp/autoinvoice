@@ -28,40 +28,53 @@
             </div>
         </div>
         <div class="row mt-4">
+
             <div class="col-lg-4">
                 <div class="dashboard-box">
-                    <h2>Number of Invoice Generated</h2>
-                    <h4>5</h4>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="dashboard-box">
-                    <h2>Number of Purchase Order Generated</h2>
-                    <h4>3</h4>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="dashboard-box">
-                    <h2>Number of Delivery Note Generated</h2>
-                    <h4>1</h4>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="dashboard-box">
+                    <?php
+                    $stmtpo = $conn->prepare("SELECT count(*) as total_po FROM purchase_order WHERE MONTH(po_date) = MONTH(CURRENT_DATE()) 
+AND YEAR(po_date) = YEAR(CURRENT_DATE())");
+                    $stmtpo->execute();
+                    $poMonth = $stmtpo->fetch(PDO::FETCH_ASSOC);
+                    $totalPoMonth = $poMonth['total_po'];
+
+                    ?>
                     <h2>Invoice Generated this month</h2>
-                    <h4>12</h4>
+                    <h4>
+                        <?php echo $totalPoMonth; ?>
+                    </h4>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="dashboard-box">
+                    <?php
+                    $stmti = $conn->prepare("SELECT count(*) as total_i FROM invoice WHERE MONTH(i_date) = MONTH(CURRENT_DATE()) 
+AND YEAR(i_date) = YEAR(CURRENT_DATE())");
+                    $stmti->execute();
+                    $iMonth = $stmti->fetch(PDO::FETCH_ASSOC);
+                    $totalIMonth = $iMonth['total_i'];
+
+                    ?>
                     <h2>Purchase Order Generated this month</h2>
-                    <h4>23</h4>
+                    <h4>
+                        <?php echo $totalIMonth; ?>
+                    </h4>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="dashboard-box">
+                    <?php
+                    $stmtdn = $conn->prepare("SELECT count(*) as total_dn FROM delivery_note WHERE MONTH(d_date) = MONTH(CURRENT_DATE()) 
+AND YEAR(d_date) = YEAR(CURRENT_DATE())");
+                    $stmtdn->execute();
+                    $dnMonth = $stmtdn->fetch(PDO::FETCH_ASSOC);
+                    $totalDnMonth = $dnMonth['total_dn'];
+
+                    ?>
                     <h2>Delivery Note Generated this month</h2>
-                    <h4>22</h4>
+                    <h4>
+                        <?php echo $totalDnMonth; ?>
+                    </h4>
                 </div>
             </div>
         </div>
@@ -86,15 +99,29 @@
     $dn = $stmt3->fetch(PDO::FETCH_ASSOC);
     $totaldn = $dn['total_dn'];
 
-    $stmt4 = $conn->prepare("SELECT l.l_firstName, l.l_lastName, l.l_id AS user_id,
-                            COUNT(po.po_user) AS num_purchase_orders,
-                            COUNT(i.i_user) AS num_invoices,
-                            COUNT(dn.d_user) AS num_delivery_notes
-                        FROM login l
-                        LEFT JOIN purchase_order po ON l.l_id = po.po_user
-                        LEFT JOIN invoice i ON l.l_id = i.i_user
-                        LEFT JOIN delivery_note dn ON l.l_id = dn.d_user
-                        GROUP BY l.l_id");
+    $stmt4 = $conn->prepare("SELECT l.l_firstName,
+       l.l_lastName,
+       l.l_id AS user_id,
+       COALESCE(po.num_purchase_orders, 0) AS num_purchase_orders,
+       COALESCE(i.num_invoices, 0) AS num_invoices,
+       COALESCE(dn.num_delivery_notes, 0) AS num_delivery_notes
+FROM login l
+LEFT JOIN (
+    SELECT po_user, COUNT(*) AS num_purchase_orders
+    FROM purchase_order
+    GROUP BY po_user
+) po ON l.l_id = po.po_user
+LEFT JOIN (
+    SELECT i_user, COUNT(*) AS num_invoices
+    FROM invoice
+    GROUP BY i_user
+) i ON l.l_id = i.i_user
+LEFT JOIN (
+    SELECT d_user, COUNT(*) AS num_delivery_notes
+    FROM delivery_note
+    GROUP BY d_user
+) dn ON l.l_id = dn.d_user
+");
     $stmt4->execute();
     $result4 = $stmt4->fetchAll(PDO::FETCH_ASSOC);
     // Format data for Google Chart
@@ -103,8 +130,8 @@
         $chart_data[] = '["' . $row['l_firstName'] . ' ' . $row['l_lastName'] . '",' . $row['num_purchase_orders'] . ',' . $row['num_invoices'] . ',' . $row['num_delivery_notes'] . ']';
     }
     $json_data = implode(",", $chart_data);
-    echo $json_data;
-
+    //echo $json_data;
+    
     //$userId = $_SESSION['userLogin'];
     $userId = 1;
     $stmt5 = $conn->prepare("SELECT 
@@ -130,29 +157,26 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <script type="text/javascript">
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
         google.charts.setOnLoadCallback(drawChart1);
         function drawChart() {
-
             var data = google.visualization.arrayToDataTable([
                 ['Number', 'Documents'],
                 ['Purchase Order', <?php echo $totalpo; ?>],
                 ['Invoice', <?php echo $totali; ?>],
                 ['Delivery Note', <?php echo $totaldn; ?>]
             ]);
-
             var options = {
                 title: 'Number of documents Issued'
             };
-
             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
             chart.draw(data, options);
         }
-        function drawChart1() {
 
+        function drawChart1() {
             var data1 = google.visualization.arrayToDataTable(
                 [
                     ['Document', 'Count'],
@@ -161,15 +185,10 @@
                     ['Delivery Notes', <?php echo $result5['num_delivery_notes']; ?>]
                 ]
             );
-
-
             var options1 = {
                 title: 'Documents Generated by User'
-
             };
-
             var chart1 = new google.visualization.PieChart(document.getElementById('piechart1'));
-
             chart1.draw(data1, options1);
         }
 

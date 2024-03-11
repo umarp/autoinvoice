@@ -1,9 +1,9 @@
 <?php
 include("./connection/connection.php");
-
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Extract data from the form
-    $po_id = $_POST['po_id']; // Assuming you have a hidden input field in your form to retrieve the PO ID
+    $po_id = $_POST['po_id'];
     $supplierId = $_POST['companyName'];
     $currency = $_POST['currency'];
     $generalRemarks = $_POST['generalRemarks'];
@@ -13,15 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $supplierAttn = $_POST['supplierAttn'];
     $companyAttn = $_POST['companyAttn'];
 
-
-    // Assuming 'currency' is the user value
-    $user = 'Umar';
-    $date = date("d-m-y");
+    $user = $_SESSION['userId'];
 
     try {
         // Update the purchase_order table
-        $sql = "UPDATE purchase_order SET po_supplierId = :supplierId, po_currency = :currency, po_subTotal = :subTotal, 
-                po_vatAmount = :vatAmount, po_total = :total, po_remarks = :generalRemarks, po_user = :user, po_date = :date 
+        $sql = "UPDATE purchase_order SET po_supplierId = :supplierId,po_supplierAttn = :supplierAttn,po_companyAttn = :companyAttn, po_currency = :currency, po_subTotal = :subTotal, 
+                po_vatAmount = :vatAmount, po_total = :total, po_remarks = :generalRemarks, po_user = :user 
                 WHERE po_id = :po_id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':supplierId', $supplierId);
@@ -31,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':total', $total);
         $stmt->bindParam(':generalRemarks', $generalRemarks);
         $stmt->bindParam(':user', $user);
-        $stmt->bindParam(':date', $date);
         $stmt->bindParam(':po_id', $po_id);
         $stmt->bindParam(':supplierAttn', $supplierAttn);
         $stmt->bindParam(':companyAttn', $companyAttn);
@@ -62,11 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $insertStmt->bindParam(':po_id', $po_id);
 
             $insertStmt->execute();
+
         }
 
         // Redirect after successful update
         header("Location: purchase_order.php");
-        echo "good";
+        ;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

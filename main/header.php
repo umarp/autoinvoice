@@ -12,7 +12,7 @@
   <div class="header_toggle">
     <i class='bx bx-menu' id="header-toggle"></i>
   </div>
-  <div class="title">AutoInvoice+</div>
+  <div class="title"><img src="./image/logo/logo-no-background.png" style="width: 120px;" alt=" logo"></div>
   <div>
     <a href="logout.php" class="btn btn-danger">
       <i class='bx bx-log-out nav_icon'></i>
@@ -30,14 +30,14 @@
         <span class="nav_logo-name">AutoInvoice+</span> </a>
       <div class="nav_list">
         <a href="index.php" class="nav_link ">
-          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+          <i><img src="image/icon/grid.png" alt="menu" style="width: 30px;color:white;"></i>
           <span class="nav_name">Dashboard</span>
         </a>
         <a href="supplier.php" class="nav_link ">
-          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+          <i><img src="image/icon/supplier.png" alt="menu" style="width: 30px;color:white;"></i>
           <span class="nav_name">Suppliers</span>
         </a> <a href="client.php" class="nav_link ">
-          <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+          <i><img src="image/icon/client.png" alt="menu" style="width: 30px;color:white;"></i>
           <span class="nav_name">Client</span>
         </a>
         <?php
@@ -46,7 +46,7 @@
 
           ?>
           <a href="purchase_order.php" class="nav_link ">
-            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <i><img src="image/icon/po.png" alt="menu" style="width: 30px;color:white;"></i>
             <span class="nav_name">Purchase Orders</span>
           </a>
           <?php
@@ -55,7 +55,7 @@
 
           ?>
           <a href="invoice.php" class="nav_link ">
-            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <i><img src="image/icon/in.png" alt="menu" style="width: 30px;color:white;"></i>
             <span class="nav_name">Invoice</span>
           </a>
           <?php
@@ -64,7 +64,7 @@
 
           ?>
           <a href="delivery_note.php" class="nav_link ">
-            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <i><img src="image/icon/delivery.png" alt="menu" style="width: 30px;color:white;"></i>
             <span class="nav_name">Delivery Note</span>
           </a>
           <?php
@@ -73,7 +73,7 @@
 
           ?>
           <a href="customerLogin.php" class="nav_link ">
-            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <i><img src="image/icon/customer.png" alt="menu" style="width: 30px;color:white;"></i>
             <span class="nav_name">Manage <br>Customer Login</span>
           </a>
           <?php
@@ -85,12 +85,12 @@
 
           ?>
           <a href="users.php" class="nav_link ">
-            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <i><img src="image/icon/user.png" alt="menu" style="width: 30px;color:white;"></i>
             <span class="nav_name">Manage Users</span>
           </a>
 
           <a href="organisation.php" class="nav_link ">
-            <i><img src="image/icon/menu.png" alt="menu" style="width: 30px;color:white;"></i>
+            <i><img src="image/icon/settings.png" alt="menu" style="width: 30px;color:white;"></i>
             <span class="nav_name">Manage <br>Organisation</span>
           </a>
 

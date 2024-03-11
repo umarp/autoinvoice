@@ -19,8 +19,6 @@ if (isset($_GET["term"])) {
                 // Access individual columns using array syntax
                 echo "<option value='" . $row['c_id'] . "' >" . $row['c_firstName'] . " " . $row['c_lastName'] . "</option>";
             }
-        } else {
-            echo "<option>No results found</option>";
         }
     } catch (PDOException $e) {
         // Handle errors

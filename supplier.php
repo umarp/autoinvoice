@@ -15,8 +15,6 @@
     <div class="container">
         <div class="container-fluid">
             <h4 class="mt-2">View Supplier</h4>
-
-
             <hr>
             <div class="row mt-2 mb-4">
                 <div class="col-12">
@@ -24,9 +22,7 @@
                         <button class="btn btn-primary">Create New Supplier</button>
                     </a>
                 </div>
-
             </div>
-
             <table class="table table-hover cell-border" id="supplierTable">
                 <thead>
                     <tr>
@@ -56,11 +52,10 @@
                     <td>" . $row['s_phone'] . " </td>
                     <td>" . $row['s_dateAdded'] . " </td>
                     <td><a href='edit_supplier.php?id=" . $row['s_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
-                    <td><button class='btn btn-danger' onclick='deleteSupplier(" . $row['s_id'] . ")'>Delete</button></td>
+                    <td><button class='btn btn-danger' onclick='deleteSupplier(" . $row['s_id'] . ",this.closest(`tr`))'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>
-
                 </tbody>
             </table>
 
@@ -74,7 +69,7 @@
         });
     </script>
     <script>
-        function deleteSupplier(supplierId) {
+        function deleteSupplier(supplierId, row) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
@@ -90,8 +85,13 @@
                         url: 'delete_supplier.php',
                         data: { supplierId: supplierId },
                         success: function (response) {
-                            // Reload the page or update the table after successful deletion
-                            location.reload();
+                            // Remove the row from the table
+                            $(row).remove();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Supplier deleted successfully!'
+                            });
                         },
                         error: function (xhr, status, error) {
                             Swal.fire({

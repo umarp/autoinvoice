@@ -41,7 +41,8 @@
         <div class="container-fluid">
 
             <h4>Invoice</h4>
-            <form class="form" action="save_invoice.php" method="POST">
+            <form id="myform" class="form" action="save_invoice.php" method="POST" target="_blank"
+                onsubmit="validate()">
 
                 <div class="row">
                     <div class="col-6">
@@ -58,9 +59,7 @@
                             <label for="Phone" class="form-label">Phone</label>
                             <input type="number" class="form-control" id="Phone" readonly value="<?php echo $phone; ?>">
 
-
                         </div>
-
                     </div>
                     <div class="col-6">
                         <div class="form-box form-group search-box">
@@ -72,8 +71,9 @@
                                 </div>
                                 <div class="col">
                                     <label>&nbsp;</label>
-                                    <select name="clientName" class="result form-control" id="selectBox">
-                                        <option>Click to select</option>
+                                    <select name="clientName" class="result form-control" id="selectBox" required
+                                        placeholder="Click to Select">
+
                                     </select>
                                 </div>
                             </div>
@@ -98,7 +98,6 @@
                             <option value="KRW">South Korean Won (KRW)</option>
                         </select>
 
-
                         <table class="table table-bordered table-hover mt-4" id="poItems">
                             <thead>
                                 <tr>
@@ -115,54 +114,19 @@
                                     <td><input type="checkbox" class="itemRow"></td>
                                     <td><input type="text" name="description[]" id="description_1" class="form-control"
                                             required></td>
-                                    <td><input type="number" name="quantity[]" id="quantity_1"
+                                    <td><input type="number" min="1" name="quantity[]" id="quantity_1"
                                             class="form-control quantity" required></td>
-                                    <td><input type="number" name="unitPrice[]" id="unitPrice_1" step=".01"
+                                    <td><input type="number" min="1" name="unitPrice[]" id="unitPrice_1" step=".01"
                                             class="form-control unitPrice" required></td>
-                                    <td><input type="number" name="totalPrice[]" id="totalPrice_1" step=".01"
+                                    <td><input type="number" min="1" name="totalPrice[]" id="totalPrice_1" step=".01"
                                             class="form-control totalPrice" required></td>
                                     <td><input type="text" name="remarks[]" id="remarks_1" class="form-control"></td>
                                 </tr>
 
                             </tbody>
                         </table>
-
-
                     </div>
-                    <style>
-                        .checkbox-button {
-                            margin-bottom: 0;
-                            cursor: pointer;
-                        }
 
-                        .checkbox-button input[type="checkbox"] {
-                            display: none;
-                        }
-
-                        .checkbox-button label {
-                            color: white;
-                            display: inline-block;
-                            padding: 6px 12px;
-                            margin-bottom: 0;
-                            text-align: center;
-                            white-space: nowrap;
-                            vertical-align: middle;
-                            cursor: pointer;
-                            border: 1px solid transparent;
-                            border-radius: 4px;
-                            background-color: grey;
-                        }
-
-                        .checkbox-button label:hover {
-                            background-color: #f5f5f5;
-                        }
-
-                        .checkbox-button input[type="checkbox"]:checked+label {
-                            background-color: #5cb85c;
-                            color: #fff;
-                            border-color: #4cae4c;
-                        }
-                    </style>
                     <div class="row mt-2">
                         <div class="col-md-4">
                             <div class="btn-group" role="group">
@@ -171,17 +135,18 @@
                             </div>
                         </div>
                         <div class="col-md-4 d-flex justify-content-center">
-                            <a class="btn btn-secondary" onclick="calculate()">ReCalculate</a>
+                            <a class="btn btn-secondary" onclick="calculateTotal()">ReCalculate</a>
                         </div>
                         <div class="col-md-4 d-flex justify-content-end">
                             <label for="ExcludeVat">Vat options</label>
                             <span class="checkbox-button">
-                                <input type="checkbox" name="excludeVat" id="excludeVat">
+                                <input type="checkbox" name="excludeVat" id="excludeVat"
+                                    onchange="handleVatChange(this)">
                                 <label for="excludeVat">Exclude</label>
                             </span>
                             <span class="checkbox-button ms-2">
                                 <input class="btn btn-success" type="checkbox" name="includeVat" id="includeVat"
-                                    value="includeVat">
+                                    value="includeVat" onchange="handleVatChange(this)">
                                 <label for="includeVat">Include</label>
                             </span>
                         </div>
@@ -209,7 +174,7 @@
                 </div>
 
 
-                <div class="row mt-4 form-box">
+                <div class="row mt-4 mb-2 form-box">
                     <div class="col-12"><label>General Remarks</label>
                         <textarea name="generalRemarks" class="form-control" id="generalRemarks" rows="3"></textarea>
 
@@ -263,8 +228,22 @@
         });
     });
 
-</script>
+    document.getElementById('myForm').addEventListener('submit', function (event) {
+        var selectBox = document.getElementById('selectBox');
+        var selectedValue = selectBox.value;
+        if (selectedValue === 'No results found') {
+            event.preventDefault(); // Prevent form submission
+            alert('Please select an item or perform a different search.');
+        }
+    });
 
+
+</script>
+<script>
+    function validate() {
+        window.location.href = "invoice.php"
+    }
+</script>
 
 
 

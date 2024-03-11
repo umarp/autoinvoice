@@ -58,7 +58,7 @@
 
                      <td><a href='edit_invoice.php?id=" . $row['i_id'] . "'><button class='btn btn-primary'>Edit</button></a></td>
                      <td><a href='print_in.php?id=" . $row['i_id'] . "' target='_blank'><button class='btn btn-primary'>Reprint</button></a></td>
-                    <td><button class='btn btn-danger' onclick='deleteIn(" . $row['i_id'] . ")'>Delete</button></td>
+                    <td><button class='btn btn-danger' onclick='deleteIn(" . $row['i_id'] . ",this.closest(`tr`))'>Delete</button></td>
                 </tr>";
                     endforeach;
                     ?>
@@ -76,7 +76,7 @@
         });
     </script>
     <script>
-        function deleteIn(inId) {
+        function deleteIn(inId, row) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
@@ -92,9 +92,13 @@
                         url: 'delete_in.php',
                         data: { inId: inId },
                         success: function (response) {
-                            // Reload the page or update the table after successful deletion
-                            location.reload();
-                            // console.log(response);
+                            // Remove the row from the table
+                            $(row).remove();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Invoice deleted successfully!'
+                            });
                         },
                         error: function (xhr, status, error) {
                             Swal.fire({

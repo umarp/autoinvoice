@@ -1,0 +1,4 @@
+Make sure to import the autoinvoice.sql file to your database.
+When login use:
+	Email: admin@email.com
+	Password: 12345678

@@ -54,11 +54,23 @@ $(document).ready(function () {
 
     //Remove Rows: Removing selected rows
     $(document).on("click", "#removeRows", function () {
+        console.log("remove");
         $(".itemRow:checked").each(function () {
-            $(this).closest("tr").removed; // Issue: Should be $(this).closest("tr").remove();
+            $(this).closest("tr").remove();
         });
         $("#checkAll").prop("checked", false); // Uncheck "checkAll" checkbox
         calculateTotal(); // Recalculate total after removing rows
+    });
+    $(".form").submit(function (event) {
+        var rowCount = $("#poItems tbody tr").length;
+        if (rowCount === 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please add at least one row in the table.",
+            });
+            event.preventDefault(); // Prevent form submission if no row is present
+        }
     });
 });
 
@@ -129,5 +141,15 @@ function calculateTotal() {
         $("#totalAfterTax").val(subTotal.toFixed(2)); // Update total after tax input
         var totalAfterTax = $("#total").val(); // Get total after tax
         $("#total").val(subTotal.toFixed(2)); // Update total input
+    }
+}
+function handleVatChange(checkbox) {
+    var excludeCheckbox = document.getElementById("excludeVat");
+    var includeCheckbox = document.getElementById("includeVat");
+
+    if (checkbox === excludeCheckbox && excludeCheckbox.checked) {
+        includeCheckbox.checked = false;
+    } else if (checkbox === includeCheckbox && includeCheckbox.checked) {
+        excludeCheckbox.checked = false;
     }
 }

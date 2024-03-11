@@ -51,7 +51,7 @@
                                 </td>
                             </tr>
                         <?php else: ?>
-                            <tr>
+                            <tr data-oId="<?php echo $row['o_id']; ?>">
                                 <td>
                                     <?php echo $row['o_id']; ?>
                                 </td>
@@ -67,7 +67,7 @@
                                 <td>
                                     <!-- Modify the onclick attribute to trigger the dataEditingModal -->
                                     <button class='btn btn-primary'
-                                        onclick="openDataEditingModal(<?php echo $row['o_id']; ?>)">Edit</button>
+                                        onclick=" openDataEditingModal(<?php echo $row['o_id']; ?>)">Edit</button>
                                 </td>
                             </tr>
                         <?php endif; ?>
@@ -78,14 +78,12 @@
             </table>
 
             <script>
-                // Function to open logo selection modal
-                function selectLogo(selectedPath) {
-                    if (selectedPath) {
+                function selectLogo(oId) {
+                    // Show the modal for selecting a new logo
+                    $('#logoSelectionModal').modal('show');
 
-                        $('#logoSelectionModal').modal('hide');
-                    } else {
-                        $('#logoSelectionModal').modal('show');
-                    }
+                    // Store the oId of the logo being updated
+                    $('#logoSelectionModal').data('oId', oId);
                 }
             </script>
             <!-- Modal for selecting logo -->
@@ -166,50 +164,64 @@
 
     </div>
     <script>
-
         function updateLogo(editedData) {
-            // Send the updated data to the server via AJAX
+            var oId = $('#logoSelectionModal').data('oId');
+
             $.ajax({
                 type: 'POST',
-                url: 'update_organisation.php', // Replace with your server-side script to update the data
-                data: {
-                    oId: 1,
-                    editedData: editedData
-                },
-                success: function (response) {
-                    // Reload the page or update the table after successful data update
-                    location.reload();
-
-                },
-                error: function (xhr, status, error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Error updating data: ' + error
-                    });
-                }
-            });
-        }
-
-
-
-        function updateData() {
-            // Get the edited data from the form
-            var editedData = $('#editedData').val();
-            var oId = $('#oid').val();
-
-            // Send the updated data to the server via AJAX
-            $.ajax({
-                type: 'POST',
-                url: 'update_organisation.php', // Replace with your server-side script to update the data
+                url: 'update_organisation.php',
                 data: {
                     oId: oId,
                     editedData: editedData
                 },
                 success: function (response) {
-                    // Reload the page or update the table after successful data update
-                    location.reload();
+                    // Update the corresponding logo image with the new value
+                    $('#logo_' + oId).attr('src', editedData);
 
+                    $('#logoSelectionModal').modal('hide');
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Logo updated successfully!'
+                    });
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error updating logo: ' + error
+                    });
+                }
+            });
+        }
+
+        function updateData() {
+            var editedData = $('#editedData').val();
+            var oId = $('#oid').val();
+
+            $.ajax({
+                type: 'POST',
+                url: 'update_organisation.php',
+                data: {
+                    oId: oId,
+                    editedData: editedData
+                },
+                success: function (response) {
+                    // Update the corresponding table cell with the new value
+                    var row = $('tr[data-oId="' + oId + '"]');
+                    row.find('td:eq(3)').html(editedData);
+
+                    $('#dataEditingModal').modal('hide');
+
+                    // Optionally, redraw the DataTable if you're using it
+                    $('#inTable').DataTable().draw();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Data updated successfully!'
+                    });
                 },
                 error: function (xhr, status, error) {
                     Swal.fire({
@@ -220,9 +232,6 @@
                 }
             });
         }
-
-
-
 
     </script>
 

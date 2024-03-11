@@ -10,15 +10,15 @@ $mpdf = new \Mpdf\Mpdf([
 require_once("connection/connection.php");
 $id = $_GET["id"];
 
-$query = "SELECT * FROM deliver_note WHERE d_id = " . $id;
+$query = "SELECT * FROM delivery_note WHERE d_id = " . $id;
 $stmt = $conn->query($query);
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if ($rows) {
-    $i_id = $rows[0]['d_id'];
-    $i_reference = $rows[0]['d_refference'];
-    $i_clientId = $rows[0]['d_clientId'];
-    $i_remarks = $rows[0]['d_remarks'];
-    $i_date = $rows[0]['d_date'];
+    $d_id = $rows[0]['d_id'];
+    $d_reference = $rows[0]['d_refference'];
+    $d_clientId = $rows[0]['d_clientId'];
+    $d_remarks = $rows[0]['d_remarks'];
+    $d_date = $rows[0]['d_date'];
 
 
 }
@@ -27,10 +27,10 @@ $query2 = "SELECT * FROM clients WHERE c_id = " . $d_clientId;
 $stmt2 = $conn->query($query2);
 $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
 if ($row2) {
-    $s_name = $row2['c_name'];
-    $s_email = $row2['c_email'];
-    $s_address = $row2['c_address'];
-    $s_phone = $row2['c_phone'];
+    $c_name = $row2['c_firstName'];
+    $c_email = $row2['c_email'];
+    $c_address = $row2['c_address'];
+    $c_phone = $row2['c_phone'];
 }
 
 $query3 = "SELECT * FROM delivery_products WHERE dp_d_id = " . $id;
@@ -71,19 +71,24 @@ $row7 = $stmt7->fetch(PDO::FETCH_ASSOC);
 if ($row7) {
     $o_IMessage = $row7['o_value'];
 }
-
+$query8 = "SELECT * FROM organisation WHERE o_id=1";
+$stmt8 = $conn->query($query8);
+$row8 = $stmt8->fetch(PDO::FETCH_ASSOC);
+if ($row8) {
+    $o_logo = $row8['o_value'];
+}
 $html = "<body>
             <table style='width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden;'>
                 <tr>
                     <td colspan='3' style='text-align: center;'>
-                        <img src='image\logo\logo-no-background.png' style='height: 40px;' />
+                        <img src='" . $o_logo . "' style='height: 40px;' />
                     </td>
                 </tr>
                 <hr>
                 <tr>
                     <td style='width: 33%;'>" . $o_name . "</td>
                     <td style='width: 33%;'>Supplier: " . $c_name . "</td>
-                    <td style='width: 33%; text-align: right;'>Delivery Note Reference: " . $i_reference . "</td>
+                    <td style='width: 33%; text-align: right;'>Delivery Note Reference: " . $d_reference . "</td>
                 </tr>
                 <tr>
                     <td>BRN:" . $o_brn . "</td>
@@ -92,7 +97,7 @@ $html = "<body>
                 <tr>
                     <td>Vat:" . $o_vat . "</td>
                     <td>Address: " . $c_address . "</td>
-                    <td style='text-align: right;'>Deliver Note Date: " . $i_date . "</td>
+                    <td style='text-align: right;'>Delivery Note Date: " . $d_date . "</td>
                 </tr>
                 
             </table>
@@ -111,7 +116,7 @@ $html = "<body>
                 </tbody>
             </table>
             <hr />
-            <p style='width: 100%;'>" . $i_remarks . "</p>
+            <p style='width: 100%;'>" . $d_remarks . "</p>
             <div style='margin-top: 20px;'>
                 <table style='width: 100%;'>
                     <tr>
@@ -125,6 +130,7 @@ $html = "<body>
               <p>" . $o_IMessage . "</p>
           </div>
         </body>";
+
 
 $mpdf->WriteHtml($html);
 $mpdf->Output();

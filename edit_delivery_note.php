@@ -80,7 +80,7 @@
         <div class="container-fluid">
 
             <h4>Delivery Note</h4>
-            <form class="form" action="do_edit_delivery_note.php" method="POST">
+            <form class="formdn" action="do_edit_delivery_note.php" method="POST">
                 <input type="hidden" name="d_id" value="<?php echo $d['d_id']; ?>">
 
                 <div class="row">
@@ -139,9 +139,6 @@
         </div>
         <div class="row mt-4 form-box">
             <div class="col-12">
-
-
-
                 <table class="table table-bordered table-hover mt-4" id="dnItems">
                     <thead>
                         <tr>
@@ -172,43 +169,7 @@
                     </tbody>
                 </table>
 
-
             </div>
-            <style>
-                .checkbox-button {
-                    margin-bottom: 0;
-                    cursor: pointer;
-                }
-
-                .checkbox-button input[type="checkbox"] {
-                    display: none;
-                }
-
-                .checkbox-button label {
-                    color: white;
-                    display: inline-block;
-                    padding: 6px 12px;
-                    margin-bottom: 0;
-                    text-align: center;
-                    white-space: nowrap;
-                    vertical-align: middle;
-                    cursor: pointer;
-                    border: 1px solid transparent;
-                    border-radius: 4px;
-                    background-color: grey;
-                }
-
-                .checkbox-button label:hover {
-                    background-color: #f5f5f5;
-                }
-
-                .checkbox-button input[type="checkbox"]:checked+label {
-                    background-color: #5cb85c;
-                    color: #fff;
-                    border-color: #4cae4c;
-                }
-            </style>
-
             <div class="row mt-2">
                 <div class="col-md-4">
                     <div class="btn-group" role="group">
@@ -223,7 +184,7 @@
         </div>
 
 
-        <div class="row mt-4 form-box">
+        <div class="row mt-4 mb-2 form-box">
             <div class="col-12"><label>General Remarks</label>
                 <textarea name="generalRemarks" class="form-control" id="generalRemarks" rows="3">
                     <?php echo $d_remarks; ?>
@@ -275,6 +236,19 @@
                 });
             } else {
                 $('#clientInfo').empty();
+            }
+        });
+        // Validate before form submission
+        $('.formdn').submit(function (event) {
+            var rowCount = $('#dnItems tbody tr').length;
+            alert(rowCount);
+            if (rowCount == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please add at least one row in the table.',
+                });
+                event.preventDefault(); // Prevent form submission if no row is present
             }
         });
     });
