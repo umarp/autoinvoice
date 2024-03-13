@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = 1;
     }
 }
-var_dump($_POST);
+
 ?>
 
 <!DOCTYPE html>

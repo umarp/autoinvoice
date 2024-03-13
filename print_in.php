@@ -89,7 +89,7 @@ $html = "<body>
             <table style='width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden;'>
                 <tr>
                     <td colspan='3' style='text-align: center;'>
-                        <img src='" . $o_logo . "' style='height: 70px;'  />
+                        <img src='" . $o_logo . "' style='height: 40px;'  />
                     </td>
                 </tr>
                 <hr>

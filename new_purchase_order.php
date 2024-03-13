@@ -59,7 +59,7 @@
                             <input type="number" class="form-control" id="Phone" readonly value="<?php echo $phone; ?>">
 
                             <label for="Attention" class="form-label">Attention</label>
-                            <input type="text" class="form-control" id="Attention" name="attention">
+                            <input type="text" class="form-control" id="Attention" name="Companyattention">
                         </div>
 
                     </div>
@@ -84,18 +84,18 @@
                 <div class="row mt-4 form-box">
                     <div class="col-12">
                         <select name="currency" id="currency" class="btn btn-primary">
-                            <option value="1">Mauritian Rupee (MUR)</option>
-                            <option value="2">US Dollar (USD)</option>
-                            <option value="3">Euro (EUR)</option>
-                            <option value="4">British Pound (GBP)</option>
-                            <option value="5">Japanese Yen (JPY)</option>
-                            <option value="6">Australian Dollar (AUD)</option>
-                            <option value="7">Canadian Dollar (CAD)</option>
-                            <option value="8">Swiss Franc (CHF)</option>
-                            <option value="9">Chinese Yuan (CNY)</option>
-                            <option value="10">Indian Rupee (INR)</option>
-                            <option value="11">Russian Ruble (RUB)</option>
-                            <option value="12">South Korean Won (KRW)</option>
+                            <option value="MUR">Mauritian Rupee (MUR)</option>
+                            <option value="USD">US Dollar (USD)</option>
+                            <option value="EUR">Euro (EUR)</option>
+                            <option value="GBP">British Pound (GBP)</option>
+                            <option value="JPY">Japanese Yen (JPY)</option>
+                            <option value="AUD">Australian Dollar (AUD)</option>
+                            <option value="CAD">Canadian Dollar (CAD)</option>
+                            <option value="CHF">Swiss Franc (CHF)</option>
+                            <option value="CNY">Chinese Yuan (CNY)</option>
+                            <option value="INR">Indian Rupee (INR)</option>
+                            <option value="RUB">Russian Ruble (RUB)</option>
+                            <option value="KRW">South Korean Won (KRW)</option>
                         </select>
 
 

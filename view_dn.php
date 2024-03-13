@@ -2,70 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AutoInvoice+</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="style.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-        rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <?php
-    require_once("./connection/connection.php");
-
-    session_start();
-
-    if (!isset($_SESSION['userRole'])) {
-        session_destroy();
-        header("Location: login.php");
-    }
-    if (isset($_SESSION['type'])) {
-        session_destroy();
-        header("Location: customerPortal/login.php");
-    }
-    if (
-        $_SESSION['userRole'] == "Staff" && (basename($_SERVER['PHP_SELF']) == "users.php"
-            || basename($_SERVER['PHP_SELF']) == "view_user.php"
-            || basename($_SERVER['PHP_SELF']) == "organisation.php"
-            || basename($_SERVER['PHP_SELF']) == "view_user.php"
-            || basename($_SERVER['PHP_SELF']) == "customerLogin.php"
-            || basename($_SERVER['PHP_SELF']) == "view_customerLogin.php"
-            || basename($_SERVER['PHP_SELF']) == "edit_customerLogin.php"
-            || basename($_SERVER['PHP_SELF']) == "do_edit_customerLogin.php")
-    ) {
-        echo "Access denied. You do not have permission to access this page.";
-        // Perform logout
-        session_destroy();
-        header("Location: login.php?message=Access denied. You do not have permission to access this page");
-        exit; // Terminate script execution after redirection
-    }
-    if (
-        $_SESSION['userRole'] == "Manager" && (basename($_SERVER['PHP_SELF']) == "users.php"
-            || basename($_SERVER['PHP_SELF']) == "view_user.php"
-            || basename($_SERVER['PHP_SELF']) == "organisation.php"
-            || basename($_SERVER['PHP_SELF']) == "view_user.php")
-    ) {
-        echo "Access denied. You do not have permission to access this page.";
-
-        session_destroy();
-        header("Location: login.php?message=Access denied. You do not have permission to access this page");
-        exit;
-    }
-    ?>
+    <?php require_once("main/head.php") ?>
 </head>
 
 <body id="body-pd">
@@ -143,8 +80,8 @@
         <div class="container-fluid">
 
             <h4>Delivery Note</h4>
-            <form class="formdn" action="do_edit_delivery_note.php" method="POST">
-                <input type="hidden" name="d_id" value="<?php echo $d['d_id']; ?>">
+            <form class="formdn">
+                <input readonly type="hidden" name="d_id" value="<?php echo $d['d_id']; ?>">
 
                 <div class="row">
                     <div class="col-6">
@@ -169,22 +106,10 @@
                         <div class="form-box form-group search-box">
                             <h2>Client Details</h2>
                             <div class="row">
-                                <div class="col">
-                                    <label for="companyName">Select Client name</label>
-                                    <input type="text" class="form-control" placeholder="Type to search...">
-                                </div>
-                                <div class="col">
-                                    <label>&nbsp;</label>
-                                    <select name="clientName" class="result form-control" id="selectBox">
-                                        <option value="<?php echo $client_id; ?>">
-                                            <?php echo $client["c_firstName"] . " " . $client["c_lastName"]; ?>
-                                        </option>
 
-                                    </select>
-                                </div>
                             </div>
                             <div id="clientInfo">
-                                <label for="Company" class="form-label">Client</label>
+                                <label for="Company" class="form-label">Client Name</label>
                                 <input type="text" class="form-control" id="Company" readonly
                                     value="<?php echo $client["c_firstName"] . " " . $client["c_lastName"]; ?>">
 
@@ -199,68 +124,58 @@
                         </div>
                     </div>
                 </div>
+        </div>
+        <div class="row mt-4 form-box">
+            <div class="col-12">
+                <table class="table table-bordered table-hover mt-4" id="dnItems">
+                    <thead>
+                        <tr>
+                            <th>Desctiption</th>
+                            <th>Quantity</th>
 
-                <div class="row mt-4 form-box">
-                    <div class="col-12">
-                        <table class="table table-bordered table-hover mt-4" id="dnItems">
-                            <thead>
-                                <tr>
-                                    <th><input id="checkAll1" class="formcontrol" type="checkbox"></th>
-                                    <th>Desctiption</th>
-                                    <th>Quantity</th>
-
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $count1 = 0;
-                                foreach ($prod as $dp) {
-                                    $count1++;
-                                    echo '<tr>
-                                    <td><input type="checkbox" class="itemRow1"></td>
-                                    <td><input type="text" name="description[]" id="description_' . $count1 . '" class="form-control"
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $count1 = 0;
+                        foreach ($prod as $dp) {
+                            $count1++;
+                            echo '<tr>
+                                    
+                                    <td><input readonly type="text" name="description[]" id="description_' . $count1 . '" class="form-control"
                                             required value=' . $dp['dp_description'] . '></td>
-                                    <td><input type="number" name="quantity[]" id="quantity_' . $count1 . '"
+                                    <td><input readonly type="number" name="quantity[]" id="quantity_' . $count1 . '"
                                             class="form-control quantity" required value=' . $dp['dp_quantity'] . '></td>
       
-                                    <td><input type="text" name="remarks[]" id="remarks_' . $count1 . '" class="form-control" value=' . $dp['dp_remarks'] . '></td>
+                                    <td><input readonly type="text" name="remarks[]" id="remarks_' . $count1 . '" class="form-control" value=' . $dp['dp_remarks'] . '></td>
                                 </tr>';
-                                }
-                                ?>
+                        }
+                        ?>
 
-                            </tbody>
-                        </table>
+                    </tbody>
+                </table>
 
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-danger" id="removeRows1">- Remove</a>
-                                <a class="btn btn-success" id="addRows1">+ Add More</a>
-                            </div>
-                        </div>
-
-                    </div>
+            </div>
 
 
-                </div>
-
-
-                <div class="row mt-4 mb-2 form-box">
-                    <div class="col-12"><label>General Remarks</label>
-                        <textarea name="generalRemarks" class="form-control" id="generalRemarks" rows="3">
-                            <?php echo $d_remarks; ?>
-                        </textarea>
-
-                    </div>
-
-                </div>
-
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
 
         </div>
+
+
+        <div class="row mt-4 mb-2 form-box">
+            <div class="col-12"><label>General Remarks</label>
+                <textarea readonly name="generalRemarks" class="form-control" id="generalRemarks" rows="3">
+                    <?php echo $d_remarks; ?>
+                </textarea>
+
+            </div>
+
+        </div>
+
+        </form>
+
+    </div>
 
     </div>
 
@@ -301,7 +216,19 @@
                 $('#clientInfo').empty();
             }
         });
-
+        // Validate before form submission
+        $('.formdn').submit(function (event) {
+            var rowCount = $('#dnItems tbody tr').length;
+            alert(rowCount);
+            if (rowCount == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please add at least one row in the table.',
+                });
+                event.preventDefault(); // Prevent form submission if no row is present
+            }
+        });
     });
     //deliver Note JS
 
@@ -322,25 +249,26 @@
     var count1 = $(".itemRow1").length;
     $(document).on("click", "#addRows1", function () {
         count1++;
+
         var newRow1 = "";
         newRow1 += "<tr>";
         newRow1 += '<td><input class="itemRow1" type="checkbox"></td>';
         newRow1 +=
             '<td><input class="form-control" type="text" id="description_' +
             count1 +
-            '" name="description[]" required></td>';
+            '" name="description[]"></td>';
         newRow1 +=
             '<td><input class="form-control quantity" type="number" id="quantity_' +
             count1 +
-            '" name="quantity[]" required></td>';
+            '" name="quantity[]"></td>';
 
         newRow1 +=
             '<td><input class="form-control" type="text" id="remarks_' +
             count1 +
-            '" name="remarks[]" > </td>';
+            '" name="remarks[]"> </td>';
 
         newRow1 += "</tr>";
-        $("#dnItems tbody").append(newRow1); // Changed to append to tbody
+        $("#dnItems").append(newRow1);
     });
 
     //Remove Rows

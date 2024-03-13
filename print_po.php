@@ -113,7 +113,7 @@ $html = "<body>
                   <tr>
                     <td>From: " . $companyAttn . "</td>
                     <td></td>
-                    <td style='text-align: right;'>Attention: </td>: " . $supplierAttn . "</td>
+                    <td style='text-align: right;'>Attention: " . $supplierAttn . "</td>
                 </tr>
             </table>
             <hr />

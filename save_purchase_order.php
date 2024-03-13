@@ -16,15 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subTotal = $_POST['subTotal'];
     $vatAmount = $_POST['vatAmount'];
     $total = $_POST['total'];
-
+    $supplierAttn = $_POST['attention'];
+    $companyAttn = $_POST['Companyattention'];
 
     $user = $_SESSION['userId'];
-    $date = date("d-m-y");
+    $date = date("y-m-d");
 
     try {
         // Insert into the purchase_order table
-        $sql = "INSERT INTO purchase_order (po_refference, po_supplierId, po_currency, po_subTotal, po_vatAmount, po_total, po_remarks, po_user, po_date) 
-                VALUES (:ref, :supplierId, :currency, :subTotal, :vatAmount, :total, :generalRemarks, :user, :date)";
+        $sql = "INSERT INTO purchase_order (po_refference, po_supplierId, po_currency, po_subTotal, po_vatAmount, po_total, po_remarks, po_user, po_date,po_supplierAttn,po_companyAttn) 
+                VALUES (:ref, :supplierId, :currency, :subTotal, :vatAmount, :total, :generalRemarks, :user, :date,:supplierAttn,:companyAttn)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':ref', $ref);
         $stmt->bindParam(':supplierId', $supplierId);
@@ -35,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':generalRemarks', $generalRemarks);
         $stmt->bindParam(':user', $user);
         $stmt->bindParam(':date', $date);
+        $stmt->bindParam(':supplierAttn', $supplierAttn);
+        $stmt->bindParam(':companyAttn', $companyAttn);
         $stmt->execute();
 
         // Get the last inserted ID

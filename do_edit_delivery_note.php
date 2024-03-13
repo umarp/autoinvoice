@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':d_id', $d_id);
             $stmt->execute();
         }
-        header("Location: delivery_note.php");
+        //header("Location: delivery_note.php");
 
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

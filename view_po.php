@@ -106,7 +106,8 @@ if (isset($_GET['id'])) {
                             <input type="number" class="form-control" id="Phone" readonly value="<?php echo $phone; ?>">
 
                             <label for="Attention" class="form-label">Attention</label>
-                            <input type="text" class="form-control" id="Attention" name="attention" readonly>
+                            <input type="text" class="form-control" id="Attention" name="attention"
+                                value="<?php echo $po['po_companyAttn']; ?>" readonly>
                         </div>
 
                     </div>
@@ -129,7 +130,8 @@ if (isset($_GET['id'])) {
                                     value="<?php echo $sup["s_phone"]; ?>">
 
                                 <label for="Attention" class="form-label">Attention</label>
-                                <input type="text" class="form-control" id="Attention" name="attention" readonly>
+                                <input type="text" class="form-control" id="Attention" name="attention"
+                                    value="<?php echo $po['po_supplierAttn']; ?>" readonly>
                             </div>
                         </div>
                     </div>

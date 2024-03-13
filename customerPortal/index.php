@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="../print_po.php?id= ' . $row['po_id'] . '" target="_blank" class="btn btn-primary">Print Purchase Order</a>
+                                    <a href="../print_po.php?id=' . $row['po_id'] . '" target="_blank" class="btn btn-primary">Print Purchase Order</a>
                                 </div>
                             </div>
                         </div>';
@@ -156,7 +156,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="../print_po.php?id= ' . $row4['i_id'] . '" target="_blank" class="btn btn-primary">Print Invoice</a>
+                                    <a href="../print_in.php?id=' . $row4['i_id'] . '" target="_blank" class="btn btn-primary">Print Invoice</a>
                                 </div>
                             </div>
                         </div>';
@@ -180,7 +180,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="../print_po.php?id= ' . $row5['d_id'] . '" target="_blank" class="btn btn-primary">Print Delivery Note</a>
+                                    <a href="../print_dn.php?id=' . $row5['d_id'] . '" target="_blank" class="btn btn-primary">Print Delivery Note</a>
                                 </div>
                             </div>
                         </div>';
@@ -207,7 +207,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="../print_po.php?id= ' . $row['po_id'] . '" target="_blank" class="btn btn-primary">Print Purchase Order</a>
+                                    <a href="../print_po.php?id=' . $row['po_id'] . '" target="_blank" class="btn btn-primary">Print Purchase Order</a>
                                 </div>
                             </div>
                         </div>';
@@ -231,7 +231,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="../print_po.php?id= ' . $row4['i_id'] . '" target="_blank" class="btn btn-primary">Print Invoice</a>
+                                    <a href="../print_in.php?id=' . $row4['i_id'] . '" target="_blank" class="btn btn-primary">Print Invoice</a>
                                 </div>
                             </div>
                         </div>';
@@ -245,7 +245,7 @@
                             <div class="box">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p>Delivery Note Reference: ' . $row5['d_refference'] . '</p>
+                                        <p>Delivery Note Reference:' . $row5['d_refference'] . '</p>
                                       
                                     </div>
                                         <div class="col-md-6">
@@ -254,7 +254,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="../print_po.php?id= ' . $row5['d_id'] . '" target="_blank" class="btn btn-primary">Print Delivery Note</a>
+                                    <a href="../print_dn.php?id=' . $row5['d_id'] . '" target="_blank" class="btn btn-primary">Print Delivery Note</a>
                                 </div>
                             </div>
                         </div>';
